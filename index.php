@@ -32,36 +32,42 @@
           </button>
       <div class="collapse navbar-collapse justify-content-start" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">     
+          
+        <?php if(isset($_SESSION['type']) AND $_SESSION['type']==0): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Dashboard</a>
+          </li>
+          <?php endif; ?>
+
           <li class="nav-item">
             <a class="nav-link" href="index.php?page=homepage#about">Sobre Nós</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Serviços</a>
+            <a class="nav-link" href="index.php?page=faq">Serviços</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="index.php?page=faq">FAQ</a>
           </li>
 
-          <?php
-          if(isset($_SESSION['authuser']) AND $_SESSION['authuser']==TRUE){
-            echo '<li class="nav-item dropdown">';
-            echo '<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">';
-            echo '<img class="avatar" src="images/profile.png" alt="">' .$_SESSION['user'] .'<b class="caret"> </b>';
-            echo '</a>';
-            echo '<div class="dropdown-menu">';
-            echo '<a href="" class="dropdown-item"><i class="fas fa-user-circle mr-2"></i>Perfil </a>';
-            echo '<a href="" class="dropdown-item"><i class="fas fa-user-cog mr-2"></i>Definições </a>';
-            echo '<div class="dropdown-divider"></div>';
-            echo '<a href="index.php?page=signout" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2"></i>Sair </a>';
-            echo '</div>';
-            echo '</li>';
-          }
-          else {
-            echo '<li class="nav-item">';
-            echo '<a href="index.php?page=sign"><button>Login</button></a>';
-            echo '</li>';
-          }
-          ?>
+          <?php if(isset($_SESSION['authuser']) AND $_SESSION['authuser']==TRUE): ?>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
+            <img class="avatar" src="images/profile.png" alt=""> <?= $_SESSION['username'] ?> <b class="caret"> </b>
+            </a>
+            <div class="dropdown-menu">
+            <a href="index.php?page=profile&user_ID=<?= $_SESSION['user_ID'] ?>" class="dropdown-item"><i class="fas fa-user-circle mr-2"></i>Perfil </a>
+            <a href="" class="dropdown-item"><i class="fas fa-user-cog mr-2"></i>Definições </a>
+            <div class="dropdown-divider"></div>
+            <a href="index.php?page=signout" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2"></i>Sair </a>
+            </div>
+            </li>
+          <?php endif; ?>
+
+          <?php if(!isset($_SESSION['authuser'])): ?>
+            <li class="nav-item">
+              <a href="index.php?page=sign"><button>Login</button></a>
+            </li>
+          <?php endif; ?>
         </ul>
       </div>
     </div>
@@ -90,6 +96,14 @@ if(isset($_GET['page'])){
 
     case 'services';
     include('index.html');
+    break;
+
+    case 'profile';
+    include('profile.php');
+    break;
+    
+    case 'editprofile';
+    include('editprofile.php');
     break;
   }
 }

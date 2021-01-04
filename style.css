@@ -248,6 +248,25 @@ body{
   font-size: 100px;
 }
 
+.consult  {
+  width: 100%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+}
+
+ .consult .card {
+  width: 200px;
+  margin: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 10px rgb(0, 0, 0, 0.3);
+}
+
+
+
+
 /* ############### Footer ############### */
 
 .footer {
@@ -296,6 +315,15 @@ body{
   max-width: 100%;
   min-height: 650px;
   padding:10px 0px 30px;
+}
+
+.error-container {
+  width: 1150px;
+  max-width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  z-index: 0;
 }
 
 .btn-container {
@@ -547,8 +575,8 @@ text-decoration: none;
 }
 
 .error {
-  width: 70%;
-  margin: -5px auto 2px;
+  width: 100%;
+  margin:auto;
   border: 1px solid #a94442;
   color: #ff6666;
   background: #f2dede;
@@ -559,7 +587,7 @@ text-decoration: none;
 .error p {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 12px;
+  font-size: 18px;
   color:#ff6666;
 }
 
@@ -898,6 +926,145 @@ text-decoration: none;
   }
 }
 
+/*############### PROFILE ###############*/
+
+#profile {
+  margin-top: 75px;
+  margin-bottom: 25px;
+}
+
+.account-settings .user-profile {
+  margin: 0 0 1rem 0;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+#profile .account-settings .user-profile {
+  margin: 0 0 1rem 0;
+  padding-bottom: 1rem;
+  text-align: center;
+}
+
+#profile .account-settings .user-profile .user-avatar {
+  margin: 0 0 1rem 0;
+}
+#profile .account-settings .user-profile .user-avatar img {
+  width: 150px;
+  height: 150px;
+  border-radius: 100px;
+}
+#profile .account-settings .user-profile h5.user-name {
+  margin: 0 0 0.5rem 0;
+}
+
+#profile .account-settings {
+  margin: 1rem 0 0 0;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+#profile .edit-profile{
+  width: 100%;
+  padding: 20px 0;
+}
+
+#profile .card {
+  background: #ffffff;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 1rem;
+  color:rgb(0, 0, 0);
+}
+
+/*############### EDITPROFILE ###############*/
+
+#editprofile {
+  margin-top: 75px;
+  margin-bottom: 150px;
+}
+
+#editprofile .ui-w-80 {
+  width: 80px !important;
+  height: auto;
+}
+
+#editprofile .btn-default {
+  border-color: rgba(24,28,33,0.1);
+  background: rgba(0,0,0,0);
+  color: #4E5155;
+}
+
+#editprofile label.btn {
+  margin-bottom: 0;
+}
+
+#editprofile .btn-outline-primary {
+  border-color: #26B4FF;
+  background: transparent;
+  color: #26B4FF;
+}
+
+#editprofile .btn {
+  cursor: pointer;
+}
+
+#editprofile .text-light {
+  color: #babbbc !important;
+}
+
+#editprofile .card {
+  background-clip: padding-box;
+  box-shadow: 0 1px 4px rgba(24,28,33,0.012);
+}
+
+#editprofile .row-bordered {
+  overflow: hidden;
+}
+
+#editprofile .account-settings-fileinput {
+  position: absolute;
+  visibility: hidden;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+#editprofile .account-settings-links .list-group-item.active {
+  font-weight: bold !important;
+}
+#editprofile html:not(.dark-style) .account-settings-links .list-group-item.active {
+  background: transparent !important;
+}
+#editprofile .account-settings-multiselect ~ .select2-container {
+  width: 100% !important;
+}
+#editprofile .light-style .account-settings-links .list-group-item {
+  padding: 0.85rem 1.5rem;
+  border-color: rgba(24, 28, 33, 0.03) !important;
+}
+#editprofile .light-style .account-settings-links .list-group-item.active {
+  color: #4e5155 !important;
+}
+#editprofile .material-style .account-settings-links .list-group-item {
+  padding: 0.85rem 1.5rem;
+  border-color: rgba(24, 28, 33, 0.03) !important;
+}
+#editprofile .material-style .account-settings-links .list-group-item.active {
+  color: #4e5155 !important;
+}
+#editprofile .dark-style .account-settings-links .list-group-item {
+  padding: 0.85rem 1.5rem;
+  border-color: rgba(255, 255, 255, 0.03) !important;
+}
+#editprofile .dark-style .account-settings-links .list-group-item.active {
+  color: #fff !important;
+}
+#editprofile .light-style .account-settings-links .list-group-item.active {
+  color: #4E5155 !important;
+}
+#editprofile .light-style .account-settings-links .list-group-item {
+  padding: 0.85rem 1.5rem;
+  border-color: rgba(24,28,33,0.03) !important;
+}
 
 
 /* ############### Responsive Component ############### */
