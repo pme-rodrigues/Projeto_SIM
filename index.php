@@ -35,7 +35,7 @@
           
         <?php if(isset($_SESSION['type']) AND $_SESSION['type']==0): ?>
           <li class="nav-item">
-            <a class="nav-link" href="#">Dashboard</a>
+            <a class="nav-link" href="index.php?page=dashboard">Dashboard</a>
           </li>
           <?php endif; ?>
 
@@ -52,7 +52,7 @@
           <?php if(isset($_SESSION['authuser']) AND $_SESSION['authuser']==TRUE): ?>
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="true">
-            <img class="avatar" src="images/profile.png" alt=""> <?= $_SESSION['username'] ?> <b class="caret"> </b>
+            <img class="avatar" src="<?=  $_SESSION['fotosrc'] ?>" alt=""> <?= $_SESSION['username'] ?> <b class="caret"> </b>
             </a>
             <div class="dropdown-menu">
             <a href="index.php?page=profile&user_ID=<?= $_SESSION['user_ID'] ?>" class="dropdown-item"><i class="fas fa-user-circle mr-2"></i>Perfil </a>
@@ -105,6 +105,10 @@ if(isset($_GET['page'])){
     case 'editprofile';
     include('editprofile.php');
     break;
+
+    case 'dashboard';
+    include('dashboard.php');
+    break; 
   }
 }
 else include('homepage.php');

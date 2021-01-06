@@ -12,12 +12,15 @@
 				<div class="account-settings">
 					<div class="user-profile">
 						<div class="user-avatar">
-							<img src="images\profile.png" alt="...">
+							<img src="<?= $fotosrc ?>" alt="...">
 						</div>
                         <h5 class="user-name"><?= $fullname ?></h5>
+
+                        <?php if($_SESSION['type'] == 0 OR $_SESSION['user_ID'] == $user_ID):?>
                         <div class="edit-profile">
                         <a href="index.php?page=editprofile&user_ID=<?= $user_ID; ?>"><button class="btn btn-light">Editar Perfil</button></a>
                         </div>
+                        <?php endif; ?>
 					</div>
 				</div>
 			</div>

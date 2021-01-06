@@ -978,92 +978,113 @@ text-decoration: none;
 
 /*############### EDITPROFILE ###############*/
 
-#editprofile {
+.editprofile {
   margin-top: 75px;
   margin-bottom: 150px;
 }
 
-#editprofile .ui-w-80 {
+.editprofile .ui-w-80 {
   width: 80px !important;
   height: auto;
 }
 
-#editprofile .btn-default {
+.editprofile .btn-default {
   border-color: rgba(24,28,33,0.1);
   background: rgba(0,0,0,0);
   color: #4E5155;
 }
 
-#editprofile label.btn {
+.editprofile label.btn {
   margin-bottom: 0;
 }
 
-#editprofile .btn-outline-primary {
+.editprofile .btn-outline-primary {
   border-color: #26B4FF;
   background: transparent;
   color: #26B4FF;
 }
 
-#editprofile .btn {
+.editprofile .btn {
   cursor: pointer;
 }
 
-#editprofile .text-light {
+.editprofile .text-light {
   color: #babbbc !important;
 }
 
-#editprofile .card {
+.editprofile .card {
   background-clip: padding-box;
   box-shadow: 0 1px 4px rgba(24,28,33,0.012);
 }
 
-#editprofile .row-bordered {
+.editprofile .row-bordered {
   overflow: hidden;
 }
 
-#editprofile .account-settings-fileinput {
+.editprofile .account-settings-fileinput {
   position: absolute;
   visibility: hidden;
   width: 1px;
   height: 1px;
   opacity: 0;
 }
-#editprofile .account-settings-links .list-group-item.active {
+.editprofile .account-settings-links .list-group-item.active {
   font-weight: bold !important;
 }
-#editprofile html:not(.dark-style) .account-settings-links .list-group-item.active {
+.editprofile html:not(.dark-style) .account-settings-links .list-group-item.active {
   background: transparent !important;
 }
-#editprofile .account-settings-multiselect ~ .select2-container {
+.editprofile .account-settings-multiselect ~ .select2-container {
   width: 100% !important;
 }
-#editprofile .light-style .account-settings-links .list-group-item {
+.editprofile .light-style .account-settings-links .list-group-item {
+  padding: 0.85rem 1.5rem;
+  border-color: rgba(17, 21, 26, 0.03) !important;
+}
+.editprofile .light-style .account-settings-links .list-group-item.active {
+  color: #4e5155 !important;
+}
+.editprofile .material-style .account-settings-links .list-group-item {
   padding: 0.85rem 1.5rem;
   border-color: rgba(24, 28, 33, 0.03) !important;
 }
-#editprofile .light-style .account-settings-links .list-group-item.active {
+.editprofile .material-style .account-settings-links .list-group-item.active {
   color: #4e5155 !important;
 }
-#editprofile .material-style .account-settings-links .list-group-item {
-  padding: 0.85rem 1.5rem;
-  border-color: rgba(24, 28, 33, 0.03) !important;
-}
-#editprofile .material-style .account-settings-links .list-group-item.active {
-  color: #4e5155 !important;
-}
-#editprofile .dark-style .account-settings-links .list-group-item {
+.editprofile .dark-style .account-settings-links .list-group-item {
   padding: 0.85rem 1.5rem;
   border-color: rgba(255, 255, 255, 0.03) !important;
 }
-#editprofile .dark-style .account-settings-links .list-group-item.active {
+.editprofile .dark-style .account-settings-links .list-group-item.active {
   color: #fff !important;
 }
-#editprofile .light-style .account-settings-links .list-group-item.active {
-  color: #4E5155 !important;
+.editprofile .light-style .account-settings-links .list-group-item.active {
+  color: #e6eaee !important;
 }
-#editprofile .light-style .account-settings-links .list-group-item {
+.editprofile .light-style .account-settings-links .list-group-item {
   padding: 0.85rem 1.5rem;
   border-color: rgba(24,28,33,0.03) !important;
+}
+
+/* ############### TABLE ############### */
+
+.filterable {
+  margin-top: 15px;
+}
+.filterable .panel-heading .pull-right {
+  margin-top: 10px;
+}
+.filterable .filters input[disabled] {
+  background-color: transparent;
+  border: none;
+  cursor: auto;
+  box-shadow: none;
+  padding: 0;
+  height: auto;
+}
+.tablehead {
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
 }
 
 

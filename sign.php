@@ -137,7 +137,8 @@
                         <div class="form-group col-12">
                             <input class="form-control" type="text" name='phone' placeholder="Contacto telefónico" required/>
                         </div>
-                    </div><label for="pinfo">Informações Pessoais</label>
+                    </div>
+                    <label for="pinfo">Informações Pessoais</label>
                     <div class="form-row" id="pinfo">
                         <div class="form-group col-4">
                             <input class="form-control" type="text" name="firstname" placeholder="Nome" required>

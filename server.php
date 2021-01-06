@@ -5,10 +5,10 @@ $errors_signin = array();
 $errors_signup = array();
 
 //User parameters
-$user_ID; $fullname; $phone; $email; $status; $adress;
+$user_ID; $fullname; $phone; $email; $status; $adress; $type; $fotosrc;
 
 //Patient parameters
-$firstname; $lastname; $cidade; $distrito; $birthdate; $gender; $nif; $seguro; $foto; $consultas;
+$firstname; $lastname; $cidade; $distrito; $birthdate; $gender; $nif; $seguro; $consultas;
 
 //connect to DataBase
 $connect = mysqli_connect($servername, $username, $password, $database)
@@ -38,8 +38,9 @@ if(isset($_GET['page']) AND $_GET['page']=='profile'){
     $email = $fetch_credentials["email"];
     $type = $fetch_credentials["tipo"];
     $status = $statuslist[$type];
+    $fotosrc = $fetch_credentials["foto"];
 
-    if( $type == 1){
+    if($type == 1){
       $query_appointments = "SELECT COUNT(id_consulta) FROM CONSULTA WHERE USER.id_user ='$user_ID' 
                             AND USER.id_user = PACIENTE.id_user 
                               AND PACIENTE.id_paciente = CONSULTA.id_paciente";
@@ -70,7 +71,8 @@ if(isset($_GET['page']) AND $_GET['page']=='editprofile'){
     $phone = $fetch_credentials["contacto"]; 
     $email = $fetch_credentials["email"];
     $type = $fetch_credentials["tipo"]; 
-    $adress = $fetch_credentials["morada"];; 
+    $adress = $fetch_credentials["morada"];
+    $fotosrc = $fetch_credentials["foto"];
 
     if($type == 1){
       $query_patient_credentials = "SELECT * FROM PACIENTE WHERE PACIENTE.id_user ='$user_ID'"; 
@@ -96,12 +98,87 @@ if(isset($_GET['page']) AND $_GET['page']=='editprofile'){
   }
 }
 
+//User profile update
+if(isset($_POST['updateprofile'])){
 
+  $fotofile = $_FILES['foto']['tmp_name'];
+  $fotoname = $_FILES['foto']['name'];
+  
+  /* check input file_upload on error */
+  if(is_uploaded_file($fotofile)){
+    
+    //Move photo
+    $folder = "C:/wamp64/www/SIM_Projeto/images/";
+    move_uploaded_file($fotofile, "$folder".$fotoname);
+    
+    //DB photo path
+    $path = "images/";
+    $fotosrc = $path.$fotoname;
+    if($_SESSION['user_ID'] == $_POST['user_ID']) 
+    $_SESSION['fotosrc'] = $fotosrc;
+  }
+  else{
+    //If no photo was uploaded
+    $fotosrc = $_POST['currentfoto']; 
+  }
+
+  $user_ID = $_POST['user_ID'];
+  $type = $_POST['tipo'];
+  $fullname = trim($_POST['firstname'])." ".trim($_POST['lastname']);
+  $adress = trim($_POST['adress1']);
+  $phone = $_POST['phone'];
+  $email = $_POST['email'];
+  
+  $update_user_query = "UPDATE USER SET email = '$email', nome = '$fullname', morada = '$adress', contacto ='$phone', foto = '$fotosrc' 
+                                    WHERE id_user = '$user_ID'";
+  $result = mysqli_query($connect, $update_user_query);
+
+  //If Patient
+  if($type == 1){
+
+    $genero = (int)($_POST['gender']);
+    $data = $_POST['birthdate'];
+    $nif = $_POST['nif'];
+    $seguro = $_POST['seguro'];
+    $distrit = $_POST['district'];
+    $city = $_POST['city'];
+
+    $id_query = "SELECT PACIENTE.id_genero, PACIENTE.id_idade FROM PACIENTE WHERE PACIENTE.id_user = '$user_ID' ";
+    $result = mysqli_query($connect, $id_query);
+    $fetch_id = mysqli_fetch_assoc($result);
+
+    $idade_id = $fetch_id['id_idade'];
+    $genero_id = $fetch_id['id_genero'];
+
+    mysqli_begin_transaction($connect);
+
+    $update_patient_query = "UPDATE PACIENTE SET nif = '$nif', seguro_saude = '$seguro', distrito = '$distrit', cidade ='$city' 
+                              WHERE id_user = '$user_ID'";
+    if(! mysqli_query($connect, $update_patient_query)){echo("Error: ".mysqli_error($connect)." roolback: ". mysqli_rollback($connect));
+      exit();
+    }                          
+
+    $update_birthdate_query = "UPDATE IDADE SET idade = '$data' WHERE id_idade = '$idade_id'";
+    if(! mysqli_query($connect, $update_birthdate_query)){echo("Error: ".mysqli_error($connect)." roolback: ". mysqli_rollback($connect));
+      exit();
+    }
+
+    $update_gender_query = "UPDATE GENERO SET genero = '$genero' WHERE id_genero = '$genero_id'";
+    if(! mysqli_query($connect, $update_gender_query)){echo("Error: ".mysqli_error($connect)." roolback: ". mysqli_rollback($connect));
+      exit();
+    }
+
+    mysqli_commit($connect);
+  }
+
+  header("location: index.php?page=editprofile&success=true&user_ID=$user_ID");
+}
 
 //User Registration
 //Patient
 if(isset($_POST['signUp_patient'])){
 $fullname = trim($_POST['firstname'])." ".trim($_POST['lastname']);
+$fotosrc = "images/profile.png";
 $genero = (int)($_POST['gender']);
 $data = $_POST['birthdate'];
 $nif = $_POST['nif'];
@@ -133,7 +210,7 @@ $type = 1;
     mysqli_begin_transaction($connect);
     $password = md5($pass);
 
-    $insert_query = "INSERT INTO USER (email, password, nome, morada, contacto, tipo) VALUES( '$email', '$password', '$fullname', '$adress', '$phone', '$type')";
+    $insert_query = "INSERT INTO USER (email, password, nome, morada, contacto, tipo, foto) VALUES( '$email', '$password', '$fullname', '$adress', '$phone', '$type', '$fotosrc')";
     if(! mysqli_query($connect, $insert_query)){echo("Error: ".mysqli_error($connect)." roolback: ". mysqli_rollback($connect));
       exit();
     }
@@ -161,12 +238,18 @@ $type = 1;
     }
 
     mysqli_commit($connect);
-
-    $_SESSION['username'] = trim($_POST['firstname']);
-    $_SESSION['authuser'] = TRUE;
-    $_SESSION['user_ID'] = $user_id;
-    $_SESSION['type'] = $type;
-    header('location: index.php?page=homepage');
+    //check if the account was created by the system admin
+    if($_SESSION['type'] == 0 AND $_SESSION['authuser'] = TRUE){
+      header('location: index.php?page=dashboard&success=true');
+    }
+    else{
+      $_SESSION['fotosrc'] = $fotosrc;
+      $_SESSION['username'] = trim($_POST['firstname']);
+      $_SESSION['authuser'] = TRUE;
+      $_SESSION['user_ID'] = $user_id;
+      $_SESSION['type'] = $type;
+      header('location: index.php?page=homepage');
+    }
   }
 }
 
@@ -180,6 +263,9 @@ if(isset($_POST['signUp_pro'])){
   $pass_conf = $_POST['password2'];
   $type = (int)$_POST['type'];;
   
+  //Default user profile photo
+  $fotosrc = "images/profile.png";
+
     //Verify password confirmation
     if($pass != $pass_conf){
     array_push($errors_signup, "Passwords inseridas são diferentes");
@@ -197,9 +283,9 @@ if(isset($_POST['signUp_pro'])){
       
       $password = md5($pass);
   
-      $insert_query = "INSERT INTO USER (email, password, nome, morada, contacto, tipo) VALUES( '$email', '$password', '$fullname', '$adress', '$phone', '$type')";
+      $insert_query = "INSERT INTO USER (email, password, nome, morada, contacto, tipo, foto) VALUES( '$email', '$password', '$fullname', '$adress', '$phone', '$type', '$fotosrc')";
       mysqli_query($connect, $insert_query);
-      header('location: index.php?page=sign&success=true');
+      header('location: index.php?page=dashboard&success=true');
     }
   }
 
@@ -216,13 +302,29 @@ if(isset($_POST['signIn'])){
     $name = explode(" ", $fetch_credentials["nome"]);
     $user_id = $fetch_credentials["id_user"];
     $type = $fetch_credentials["tipo"];
+    $foto = $fetch_credentials["foto"];
     $_SESSION['username'] = $name[0];
     $_SESSION['authuser'] = TRUE;
     $_SESSION['user_ID'] = $user_id;
     $_SESSION['type'] = $type;
+    $_SESSION['fotosrc'] = $foto;
     header('location: index.php?page=homepage');
   }
   else array_push($errors_signin, "Email ou password incorretos");
 }
 
+//List Users
+if($_GET['page'] =='dashboard'){
+
+//LIST PATIENTS
+$all_patient_query = "SELECT USER.id_user, USER.nome, PACIENTE.nif, IDADE.idade FROM USER, PACIENTE, IDADE WHERE USER.id_user = PACIENTE.id_user 
+                            AND PACIENTE.id_idade = IDADE.id_idade";
+
+$result = mysqli_query($connect ,$all_patient_query);
+$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+$all_pro_query = "SELECT USER.id_user, USER.nome, USER.email, USER.tipo FROM USER WHERE USER.tipo !='1'";
+$result = mysqli_query($connect ,$all_pro_query);
+$users_pro = mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
 ?>
