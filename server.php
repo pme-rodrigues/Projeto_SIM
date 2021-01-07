@@ -10,8 +10,9 @@ $user_ID; $fullname; $phone; $email; $status; $adress; $type; $fotosrc;
 //Patient parameters
 $firstname; $lastname; $cidade; $distrito; $birthdate; $gender; $nif; $seguro; $appointments;
 
-//List 
+//Lists
 $doctors_list;
+$appointments_list;
 
 //connect to DataBase
 $connect = mysqli_connect($servername, $username, $password, $database)
@@ -44,13 +45,7 @@ if(isset($_GET['page']) AND $_GET['page']=='profile'){
     $fotosrc = $fetch_credentials["foto"];
 
     if($type == 1){
-      /*$query_appointments = "SELECT COUNT(id_consulta) FROM CONSULTA, USER, PACIENTE WHERE USER.id_user ='$user_ID' 
-                            AND USER.id_user = PACIENTE.id_user 
-                              AND PACIENTE.id_paciente = CONSULTA.id_paciente";
-      $result = mysqli_query($connect, $query_appointments);
-      $row = mysqli_fetch_row($result);
-      $consultas = $row[0];*/
-
+  
       $query_active_appointments = "SELECT COUNT(id_consulta) FROM CONSULTA, USER, PACIENTE WHERE USER.id_user ='$user_ID'
                                   AND USER.id_user = PACIENTE.id_user 
                                     AND PACIENTE.id_paciente = CONSULTA.id_paciente
@@ -58,30 +53,42 @@ if(isset($_GET['page']) AND $_GET['page']=='profile'){
       $result = mysqli_query($connect, $query_active_appointments);
       $row = mysqli_fetch_row($result);
       $appointments = $row[0];
-      
+      $fetch_patient_id = "SELECT PACIENTE.id_paciente FROM PACIENTE WHERE PACIENTE.id_user = '$user_ID'";
+      $result = mysqli_query($connect, $fetch_patient_id);
+      $row = mysqli_fetch_row($result);
+      $paciente_ID = $row[0];
+
       //Mark an appointment
       if($appointments == 0 AND isset($_GET['medic_id'])){
-        
         $medico_ID = $_GET['medic_id'];
-
-        $fetch_patient_id = "SELECT PACIENTE.id_paciente FROM PACIENTE WHERE PACIENTE.id_user = '$user_ID'";
-        $result = mysqli_query($connect, $fetch_patient_id);
-        $row = mysqli_fetch_row($result);
-        $paciente_ID = $row[0];
 
         $insert_appointment = "INSERT INTO CONSULTA (id_paciente, id_medico) VALUES( '$paciente_ID', '$medico_ID')";
         $result = mysqli_query($connect, $insert_appointment);
         header("location: index.php?page=profile&user_ID=".$user_ID."&success=true&op=mar");
       }
 
+      if(isset($_GET['desmarcar'])){
+        $query_desmarcar = "DELETE FROM CONSULTA WHERE id_paciente = '$paciente_ID'";
+        $result = mysqli_query($connect, $query_desmarcar);
+        $appointments = 0;
+      }
 
       if($appointments == 0){
         $query_active_doctors = "SELECT USER.nome, USER.id_user, COUNT(id_consulta) AS Total FROM USER LEFT JOIN CONSULTA ON USER.id_user = CONSULTA.id_medico 
                                   AND CONSULTA.estado = '0' WHERE USER.tipo = '2' GROUP BY USER.nome, USER.id_user ORDER BY Total ASC";
         $result = mysqli_query($connect, $query_active_doctors);
-        $doctors_list = mysqli_fetch_all($result, MYSQLI_ASSOC);                    
+        $doctors_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        if(isset($_GET['desmarcar'])){header("location: index.php?page=profile&user_ID=".$user_ID."&success=true&op=des");}                
       } 
-    }                      
+    }
+    if($type == 2){
+
+      $fetch_appointments = "SELECT USER.id_user, USER.nome, CONSULTA.data FROM USER, PACIENTE, CONSULTA WHERE USER.id_user = PACIENTE.id_user 
+                              AND PACIENTE.id_paciente = CONSULTA.id_paciente AND CONSULTA.estado = '0' 
+                                AND CONSULTA.id_medico ='$user_ID' ORDER BY CONSULTA.data ASC ";
+      $result = mysqli_query($connect, $fetch_appointments);
+      $appointments_list = mysqli_fetch_all($result, MYSQLI_ASSOC);                        
+    }
   }
 }
 
@@ -131,7 +138,6 @@ if(isset($_GET['page']) AND $_GET['page']=='editprofile'){
   }
 }
 
-
 //Delete Profile 
 if(isset($_GET['page']) AND $_GET['page']=='editprofile'){
   if(isset($_GET['delete_id'])){
@@ -144,9 +150,6 @@ if(isset($_GET['page']) AND $_GET['page']=='editprofile'){
     header("location: index.php?page=dashboard&success=true&op=del"); 
   }
 }
-
-
-
 
 //User profile update
 if(isset($_POST['updateprofile'])){
@@ -358,7 +361,21 @@ if(isset($_POST['signIn'])){
     $_SESSION['user_ID'] = $user_id;
     $_SESSION['type'] = $type;
     $_SESSION['fotosrc'] = $foto;
-    header('location: index.php?page=homepage');
+    $path;
+    switch($type){
+      case 0:
+        $path = 'dashboard';
+        break;
+      case 1:
+        $path = 'homepage';
+        break;
+      case 2:
+        $path = 'profile&user_ID='.$_SESSION['user_ID'];
+        break; 
+      case 3:
+        $path = 'homepage';
+    }
+    header('location: index.php?page='.$path);
   }
   else array_push($errors_signin, "Email ou password incorretos");
 }

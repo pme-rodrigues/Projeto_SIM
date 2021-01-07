@@ -10,6 +10,9 @@
             <?php if($_GET['op'] == 'mar'):?>
                 <h5 class="modal-title">Registo Realizado com Sucesso</h5>
             <?php endif; ?>
+            <?php if($_GET['op'] == 'des'):?>
+                <h5 class="modal-title">Consulta Desmarcada</h5>
+            <?php endif; ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -17,6 +20,21 @@
         </div>
     </div>
 </div>
+
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pretende desmarcar a consulta?</h5>
+            </div>
+            <div class="modal-footer">
+                <a href="index.php?page=profile&user_ID=<?= $user_ID;?>&desmarcar"><button type="button" class="btn btn-danger">Desmarcar</button></a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <section id="profile">
 <div class="container">
@@ -103,7 +121,10 @@
                                     </strong>
                                 </td>
                                 <td class="text-primary">
-                                <?= $appointments ?>
+                                <?= $appointments ?> 
+                                <?php if($appointments != 0):?>
+                                    <a class="text-info text-decoration-none" data-toggle="modal" href="#deleteModal">- Desmarcar Consulta</a>
+                                <?php endif; ?>      
                                 </td>
                             </tr>
                             <?php endif;?>
@@ -141,7 +162,7 @@
 <?php endif; ?>
     
 <!--  Só deve aparecer se o paciente não possuir consultas pendentes  -->
-<?php if($appointments == 0): ?>
+<?php if($_SESSION['type'] == 1  AND $appointments == 0): ?>
 <section class="consult">
     <div class="container">
         <div class="card-deck">                     
@@ -183,7 +204,8 @@
 </section>
 <?php endif; ?>
 
-<?php if($_SESSION['type'] == 2):?>
+<!--  Só deve aparecer caso se trate de um médico   -->
+<?php if($_SESSION['type'] == 2 AND $_SESSION['user_ID']== $user_ID):?>
 <section class="consult">
     <div class="container tbl">
         <h3>Tabela de Consultas</h3>
@@ -200,19 +222,18 @@
                         <tr class="filters">
                             <th><input type="text" class="form-control" placeholder="ID" disabled></th>
                             <th><input type="text" class="form-control" placeholder="Nome" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Email" disabled></th>
-                            <th><input type="text" class="form-control" placeholder="Estatuto" disabled></th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php foreach($appointments_list as $appointment): ?>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><?= $appointment['nome'] ?></td>
+                            <td><?= $appointment['data'] ?></td>
+                            <td><a href="index.php?page=profile&user_ID=<?= $appointment['id_user'];?>"> Realizar Consulta</a></td>
                         </tr>
+                        <?php endforeach;?>
                     </tbody>
                 </table>
             </div>
