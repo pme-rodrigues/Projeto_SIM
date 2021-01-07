@@ -8,7 +8,10 @@ $errors_signup = array();
 $user_ID; $fullname; $phone; $email; $status; $adress; $type; $fotosrc;
 
 //Patient parameters
-$firstname; $lastname; $cidade; $distrito; $birthdate; $gender; $nif; $seguro; $consultas;
+$firstname; $lastname; $cidade; $distrito; $birthdate; $gender; $nif; $seguro; $appointments;
+
+//List 
+$doctors_list;
 
 //connect to DataBase
 $connect = mysqli_connect($servername, $username, $password, $database)
@@ -41,13 +44,43 @@ if(isset($_GET['page']) AND $_GET['page']=='profile'){
     $fotosrc = $fetch_credentials["foto"];
 
     if($type == 1){
-      $query_appointments = "SELECT COUNT(id_consulta) FROM CONSULTA WHERE USER.id_user ='$user_ID' 
+      /*$query_appointments = "SELECT COUNT(id_consulta) FROM CONSULTA, USER, PACIENTE WHERE USER.id_user ='$user_ID' 
                             AND USER.id_user = PACIENTE.id_user 
                               AND PACIENTE.id_paciente = CONSULTA.id_paciente";
-      $result = mysqli_query($connect, $query_credentials);
-      $row = mysqli_num_rows($result);
-      if($row[0] == null) $consultas = 0;
-      else $consultas = $row[0];
+      $result = mysqli_query($connect, $query_appointments);
+      $row = mysqli_fetch_row($result);
+      $consultas = $row[0];*/
+
+      $query_active_appointments = "SELECT COUNT(id_consulta) FROM CONSULTA, USER, PACIENTE WHERE USER.id_user ='$user_ID'
+                                  AND USER.id_user = PACIENTE.id_user 
+                                    AND PACIENTE.id_paciente = CONSULTA.id_paciente
+                                     AND CONSULTA.estado = '0'";
+      $result = mysqli_query($connect, $query_active_appointments);
+      $row = mysqli_fetch_row($result);
+      $appointments = $row[0];
+      
+      //Mark an appointment
+      if($appointments == 0 AND isset($_GET['medic_id'])){
+        
+        $medico_ID = $_GET['medic_id'];
+
+        $fetch_patient_id = "SELECT PACIENTE.id_paciente FROM PACIENTE WHERE PACIENTE.id_user = '$user_ID'";
+        $result = mysqli_query($connect, $fetch_patient_id);
+        $row = mysqli_fetch_row($result);
+        $paciente_ID = $row[0];
+
+        $insert_appointment = "INSERT INTO CONSULTA (id_paciente, id_medico) VALUES( '$paciente_ID', '$medico_ID')";
+        $result = mysqli_query($connect, $insert_appointment);
+        header("location: index.php?page=profile&user_ID=".$user_ID."&success=true&op=mar");
+      }
+
+
+      if($appointments == 0){
+        $query_active_doctors = "SELECT USER.nome, USER.id_user, COUNT(id_consulta) AS Total FROM USER LEFT JOIN CONSULTA ON USER.id_user = CONSULTA.id_medico 
+                                  AND CONSULTA.estado = '0' WHERE USER.tipo = '2' GROUP BY USER.nome, USER.id_user ORDER BY Total ASC";
+        $result = mysqli_query($connect, $query_active_doctors);
+        $doctors_list = mysqli_fetch_all($result, MYSQLI_ASSOC);                    
+      } 
     }                      
   }
 }
@@ -97,6 +130,23 @@ if(isset($_GET['page']) AND $_GET['page']=='editprofile'){
     }
   }
 }
+
+
+//Delete Profile 
+if(isset($_GET['page']) AND $_GET['page']=='editprofile'){
+  if(isset($_GET['delete_id'])){
+    
+    $user_ID = $_GET['delete_id'];
+
+    $delete_user_query = "DELETE FROM USER WHERE id_user=' $user_ID'";
+    $result = mysqli_query($connect, $delete_user_query); 
+
+    header("location: index.php?page=dashboard&success=true&op=del"); 
+  }
+}
+
+
+
 
 //User profile update
 if(isset($_POST['updateprofile'])){
@@ -239,8 +289,8 @@ $type = 1;
 
     mysqli_commit($connect);
     //check if the account was created by the system admin
-    if($_SESSION['type'] == 0 AND $_SESSION['authuser'] = TRUE){
-      header('location: index.php?page=dashboard&success=true');
+    if(isset($_SESSION['authuser']) AND $_SESSION['type'] == 0 ){
+      header('location: index.php?page=dashboard&success=true&op=reg');
     }
     else{
       $_SESSION['fotosrc'] = $fotosrc;
@@ -285,7 +335,7 @@ if(isset($_POST['signUp_pro'])){
   
       $insert_query = "INSERT INTO USER (email, password, nome, morada, contacto, tipo, foto) VALUES( '$email', '$password', '$fullname', '$adress', '$phone', '$type', '$fotosrc')";
       mysqli_query($connect, $insert_query);
-      header('location: index.php?page=dashboard&success=true');
+      header('location: index.php?page=dashboard&success=true&op=reg');
     }
   }
 
@@ -327,4 +377,6 @@ $all_pro_query = "SELECT USER.id_user, USER.nome, USER.email, USER.tipo FROM USE
 $result = mysqli_query($connect ,$all_pro_query);
 $users_pro = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+
+
 ?>

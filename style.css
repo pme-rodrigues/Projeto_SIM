@@ -976,6 +976,29 @@ text-decoration: none;
   color:rgb(0, 0, 0);
 }
 
+.tbl{
+  padding: 25px!important;
+  margin-top: 25px!important;
+  background-color: rgb(255, 255, 255)!important;
+}
+
+.tbl .card-header{
+  background-color: rgba(111, 188, 255, 0.7);
+}
+
+.tbl .card{
+  width: 100%!important;
+}
+
+.tbl1 .card{
+  width: 98%!important;
+}
+
+.tbl1 .card-header{
+  background-color: rgba(111, 188, 255, 0.7);
+}
+
+
 /*############### EDITPROFILE ###############*/
 
 .editprofile {
@@ -1084,7 +1107,6 @@ text-decoration: none;
 }
 .tablehead {
   background-color: rgb(255, 255, 255);
-  border-radius: 15px;
 }
 
 

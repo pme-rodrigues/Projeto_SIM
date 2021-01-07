@@ -16,6 +16,22 @@
     </div>
 </div>
 
+
+<!------ Modal box for user drop/delete ---------->
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Eliminar a Ficha de Utilizador</h5>
+            </div>
+            <div class="modal-footer">
+                <a href="index.php?page=editprofile&delete_id=<?=$user_ID ?>"><button type="button" class="btn btn-danger">Eliminar</button></a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section class="editprofile">
     <div class="container light-style flex-grow-1 container-p-y">
 
@@ -29,6 +45,9 @@
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
+                        <?php if($_SESSION['type']==0):?>
+                        <a class="list-group-item list-group-item-action mt-4" data-toggle="modal" href="#deleteModal">Delete User</a>
+                        <?php endif;?>
                     </div>
                 </div>
             <div class="col-md-9">

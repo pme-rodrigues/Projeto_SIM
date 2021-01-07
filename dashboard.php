@@ -2,12 +2,17 @@
     include('server.php');
     include('errors.php');
 ?>
-
+<!------ Modal box for user registration and deleting---------->
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+            <?php if($_GET['op'] == 'reg'):?>
                 <h5 class="modal-title">Registo Realizado com Sucesso</h5>
+            <?php endif; ?>
+            <?php if($_GET['op'] == 'del'):?>
+                <h5 class="modal-title">Ficha de Utilizador Eliminada</h5>
+            <?php endif; ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -49,7 +54,7 @@
                         <div class="card-body">
                             <div class="row p-2 m-1 bg-light">
 
-                                <!------ Include the above in your HEAD tag ---------->
+                                
 
                                 <div class="container">
                         
@@ -67,6 +72,7 @@
                                                         <th><input type="text" class="form-control" placeholder="Nome" disabled></th>
                                                         <th><input type="text" class="form-control" placeholder="Data de Nascimento" disabled></th>
                                                         <th><input type="text" class="form-control" placeholder="NIF" disabled></th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -76,6 +82,7 @@
                                                         <td><?= $user['nome']; ?></td>
                                                         <td><?= $user['idade']; ?></td>
                                                         <td><?= $user['nif']; ?></td>
+                                                        <td><a href="index.php?page=editprofile&user_ID=<?= $user['id_user'];?>"> Editar</a></td>
                                                     </tr>
                                                     <?php endforeach; ?> 
                                                 </tbody>
@@ -107,8 +114,9 @@
                                                             <tr class="filters">
                                                                 <th><input type="text" class="form-control" placeholder="ID" disabled></th>
                                                                 <th><input type="text" class="form-control" placeholder="Nome" disabled></th>
-                                                                <th><input type="text" class="form-control" placeholder="Data de Nascimento" disabled></th>
-                                                                <th><input type="text" class="form-control" placeholder="NIF" disabled></th>
+                                                                <th><input type="text" class="form-control" placeholder="Email" disabled></th>
+                                                                <th><input type="text" class="form-control" placeholder="Estatuto" disabled></th>
+                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -127,6 +135,7 @@
                                                                     echo $nlist[$user_pro['tipo']];
                                                                     ?>
                                                                 </td>
+                                                                <td><a href="index.php?page=editprofile&user_ID=<?= $user_pro['id_user'];?>"> Editar</a></td>
                                                             </tr>
                                                             <?php endforeach; ?> 
                                                         </tbody>
