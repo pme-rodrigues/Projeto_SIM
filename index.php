@@ -43,10 +43,7 @@
             <a class="nav-link" href="index.php?page=homepage#about">Sobre Nós</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="index.php?page=faq">Serviços</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?page=faq">FAQ</a>
+            <a class="nav-link" target="_blank" href="https://covid19.min-saude.pt/"> Notícias</a>
           </li>
 
           <?php if(isset($_SESSION['authuser']) AND $_SESSION['authuser']==TRUE): ?>
@@ -108,7 +105,16 @@ if(isset($_GET['page'])){
 
     case 'dashboard';
     include('dashboard.php');
-    break; 
+    break;
+    
+    case 'formcovid':
+    include('formcovid.php');
+    break;
+    
+    case 'report':
+    include('report.php');
+    break;
+
   }
 }
 else include('homepage.php');
@@ -119,19 +125,19 @@ else include('homepage.php');
 <section class="page-footer footer">
  <div class="container-fluid text-center text-md-left mt-5">
    <div class="row">
-     <div class="col-md-4 mx-auto mb-4">
-       <img src="images/logo_nav.jpg" alt="">
-       <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo.</p>
-     </div>
+     <div class="col-md-4 mx-auto mb-4 text-center">
+       <img class="mr-3 img1" src="images/logo_nav.jpg" alt="">
+       <a class="mx-3" href="https://www.fct.unl.pt/"><img class="img2"  src="images/fct_logo.gif" alt=""></a>
+       <a class="ml-3" href="https://www.unl.pt/"><img class="img2" src="images/nova_logo.png" alt=""></a>
+     
+      </div>
      <div class="col-md-4 mx-auto mb-4">
        <h6 class="text-uppercase font-weight-bold">Links úteis</h6>
        <hr class="line-divider">
        <ul class="list-unstyled">
-         <li class="my-2">Inicio</li>
-         <li class="my-2">Sobre Nós</li>
-         <li class="my-2">Serviços</li>
-         <li class="my-2">Contacto</li>
-         <li class="my-2">FAQ</li>
+         <li class="my-2"><a class="text-decoration-none" href="index.php?page=homepage">Início </a></li>
+         <li class="my-2"><a class="text-decoration-none" href="index.php?page=homepage#about"> Sobre Nós</a></li>
+         <li class="my-2"><a class="text-decoration-none" href="https://covid19.min-saude.pt/"> Notícias </a></li>
        </ul>
      </div>
      <div class="col-md-4 mx-auto mb-4">
@@ -139,8 +145,8 @@ else include('homepage.php');
        <hr class="line-divider">
        <ul class="list-unstyled">
          <li class="my-2"><i class="fas fa-phone mr-2"></i>+351-### ### ###</li>
-         <li class="my-2"><i class="fas fa-envelope mr-2"></i>contact@COVIDSYM.pt</li>
-         <li class="my-2"><i class="fas fa-map-marker-alt mr-2"></i>Endereço, Cidade Código-Postal, Portugal</li>
+         <li class="my-2"><i class="fas fa-envelope mr-2"></i>contact@covidsym.pt</li>
+         <li class="my-2"><i class="fas fa-map-marker-alt mr-2"></i>Largo da Torre, 2825-149 Caparica, Portugal</li>
        </ul>
      </div>
    </div>
@@ -157,7 +163,7 @@ else include('homepage.php');
     </div>
   </div>
   <div class="footer-copyright text-center py-1">
-    <p>&copy; Copyright</p>
+    <i><p>&copy; 2020 André Escoval, Marta Ferreira e Pedro Rodrigues todos os Direitos Reservados</p></i>
   </div>
 </section>
 </body>

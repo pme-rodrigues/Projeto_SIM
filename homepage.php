@@ -9,9 +9,9 @@
   <div class="container">
     <div class="welcome text-center">
       <h1>Bem-vindo ao <span style="letter-spacing:3px">COVIDSYM</span></h1>
-      <p>#Informação</p>
-      <button type="button" class="btn check-up mx-3"> 
-        <i class="fas fa-user-md mx-2"></i>Área Pessoal</button>
+      <br>
+      <a roll="button"  href="index.php?page=sign" class="btn check-up mx-3">
+        <i class="fas fa-user-md mx-2"></i>Área Pessoal</a>
       <button type="button" class="btn read-more mx-3">Fale Connosco</button>
     </div>
   </div>
@@ -22,11 +22,11 @@
     <div class="row info-background">
       <div class="col-md-5 info-article"></div>
       <div class="col-md-7 info-content">
-        <h3>O <span style="letter-spacing:3px">COVIDSYM</span> #informação</h3>
+        <h3>O <span style="letter-spacing:3px">COVIDSYM</span> - Como Proceder</h3>
         <ul>
           <li><i class="fas fa-clipboard-list mr-2"></i>Crie uma conta</li>
-          <li><i class="fas fa-file-medical mr-2"></i>Preencha um questionário simples</li>
-          <li><i class="fas fa-user-md mr-2"></i>Feito! Agora será contatado por um dos nossos terapeutas</li>
+          <li><i class="fas fa-file-medical mr-2"></i>Marque a consulta com um profissional à sua escolha.</li>
+          <li><i class="fas fa-user-md mr-2"></i>Feito! Agora é só aguardar pelo contacto de um dos nossos profissionais de saúde.</li>
         </ul>
       </div>
     </div>
@@ -69,30 +69,19 @@
             <a href="#about" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
           </div>
 
-          <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
-            <h3>Enim quis est voluptatibus aliquid consequatur fugiat</h3>
-            <p>Esse voluptas cumque vel exercitationem. Reiciendis est hic accusamus. Non ipsam et sed minima temporibus laudantium. Soluta voluptate sed facere corporis dolores excepturi. Libero laboriosam sint et id nulla tenetur. Suscipit aut voluptate.</p>
-
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-swimming-pool"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-            </div>
-
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-laptop-medical"></i></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-            </div>
-
-            <div class="icon-box">
-              <div class="icon"><i class="fas fa-book-medical"></i></div>
-              <h4 class="title"><a href="">Dine Pad</a></h4>
-              <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut deserunt minus aut eligendi omnis</p>
-            </div>
-
+          <div class="col-xl-7 col-lg-6 d-flex flex-column align-items-stretch text-justify justify-content-center py-5 px-lg-5">
+            <h3>Sobre nós</h3>
+            <p>O COVIDSYM é uma plataforma de apoio à decisão, desenhada por três alunos de Engenharia Biomédica da FCT-UNL e destina-se a auxiliar os profissionais de saúde no processo de triagem dos casos com maior risco de infeção pela COVID-19. A nossa ambição é dinamizar um ambiente mais rápido, seguro e eficiente nos hospitais, onde um paciente seja orientado e, testado caso necessário, da forma mais célere e assertiva possível. Deste modo consideramos que a simbiose entre profissionais altamente capacitados e o nosso sistema levará qualquer unidade hospitalar ao seu expoente máximo de eficácia, prevenindo-se assim a perda de muitas vidas.</p>
+            <br>
           </div>
         </div>
-
       </div>
-    </section><!-- End About Section -->
+</section>
+
+<section class="team">
+  <div class="container">
+    <div class="col-12 d-flex flex-column align-items-stretch justify-content-center">
+      <div class="text-center"> <h3>A Equipa</h3> <img class="rounded" src="images/Apresentação3.png" alt="" width="800"> </div>
+    </div>
+  </div>
+</section>

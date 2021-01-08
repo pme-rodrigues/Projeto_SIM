@@ -10,9 +10,15 @@ $user_ID; $fullname; $phone; $email; $status; $adress; $type; $fotosrc;
 //Patient parameters
 $firstname; $lastname; $cidade; $distrito; $birthdate; $gender; $nif; $seguro; $appointments;
 
+//Appointment
+$id_m;
+$id_f;
+$report;
+
 //Lists
 $doctors_list;
 $appointments_list;
+$user_info_list;
 
 //connect to DataBase
 $connect = mysqli_connect($servername, $username, $password, $database)
@@ -393,6 +399,85 @@ $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 $all_pro_query = "SELECT USER.id_user, USER.nome, USER.email, USER.tipo FROM USER WHERE USER.tipo !='1'";
 $result = mysqli_query($connect ,$all_pro_query);
 $users_pro = mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+if(isset($_GET['page']) AND $_GET['page'] = 'formcovid'){
+    if(isset($_GET['user_ID'])){
+        $user_ID = $_GET['user_ID'];
+    }
+    if(isset($_POST['diagnostic'])){
+      
+      //Insert parameters into database
+      $user_ID = $_POST['user_ID'];
+      $id_m = $_SESSION['user_ID'];
+
+      $query_paciente = "SELECT id_paciente, id_genero, id_idade FROM paciente WHERE id_user = '$user_ID'";
+      $result_paciente = mysqli_query ($connect, $query_paciente) or die (mysqli_error($connect));
+      $paciente = mysqli_fetch_assoc($result_paciente);
+      
+      //Patient birthdate, gender and patient id's 
+      $id_paciente = $paciente['id_paciente'];
+      $id_genero = $paciente['id_genero'];
+      $id_idade = $paciente['id_idade'];
+
+      
+      //List of symptoms
+      $temperatura = $_POST['temperatura'];
+      $tosse = (int)$_POST['DRY_COUG'];
+      $garganta = (int)$_POST['SORE_THR'];
+      $fraqueza = (int)$_POST['WEAKNESS'];
+      $prob_r = (int)$_POST['BREATHIN'];
+      $sonolencia = (int)$_POST['DROWSINE'];
+      $dor_peito = (int)$_POST['PAIN_IN'];
+      $viagens = (int)$_POST['TRAVEL_H'];
+      $diabetes = (int)$_POST['DIABETES'];
+      $coracao = (int)$_POST['HEART_DI'];
+      $pulmao = (int)$_POST['LUNG_DIS'];
+      $avc = (int)$_POST['STROKE_O'];
+      $sintomas = (int)$_POST['SYMPTOMS'];
+      $press = (int)$_POST['HIGH_BLO'];
+      $renal = (int)$_POST['KIDNEY_D'];
+      $apetite = (int)$_POST['CHANGE_I'];
+      $olfato = (int)$_POST['LOSS_OF'];
+
+      $insert_fatores = "INSERT INTO fatores_risco (id_paciente, id_genero, id_idade, temp_corporal, tosse_seca, dor_garganta,
+                                       fraqueza, prob_respiratorio, sonolencia, dor_peito, viagens, diabetes, doenca_cardiaca, 
+                                        doenca_pulmonar, avc, prog_sintomas, press_arterial, doenca_renal, perda_apetite, perda_olfato)
+	                        VALUES ('$id_paciente',' $id_genero','$id_idade','$temperatura','$tosse','$garganta','$fraqueza','$prob_r','$sonolencia',
+                                    '$dor_peito','$viagens','$diabetes','$coracao','$pulmao','$avc','$sintomas','$press','$renal','$apetite','$olfato')";
+      
+      $results_insert_fatores = mysqli_query ($connect, $insert_fatores) or die (mysqli_error($connect)); 
+
+      $id_fatores = mysqli_insert_id($connect);
+
+      //Get diagnostic
+      include('arvore.php');
+
+      //
+      $report = TRUE;
+
+      $query_get_user_information = "SELECT USER.nome, USER.email, USER.foto FROM USER WHERE USER.id_user ='$user_ID'";
+      $result= mysqli_query($connect, $query_get_user_information) or die (mysqli_error($connect));
+      $user_info_list = mysqli_fetch_assoc($result);
+
+    }
+    if(isset($_POST['finish_appointment'])){
+      $diag_med = $_POST['diag_med'];
+      $obs = $_POST['obs'];
+      $id_paciente = $_POST['id_paciente'];
+      $id_fatores = $_POST['id_fatores'];
+      $diag_site = $_POST['diag_site'];
+      $id_med = $_SESSION['user_ID'];
+
+      $insert_diag = "INSERT INTO diagnostico (diagnostico_md, diagnostico_site, observacoes) VALUES ('$diag_med','$diag_site','$obs')";
+      $results_diag= mysqli_query ($connect, $insert_diag) or die (mysqli_error($connect));
+      
+      $id_d = mysqli_insert_id($connect);
+      $update_consulta = "UPDATE consulta SET id_fatores_risco = '$id_fatores' , id_diagnostico_med = '$id_d', estado = '1' WHERE estado = '0' AND id_paciente = '$id_paciente' AND id_medico = '$id_med'";
+      $result_update = mysqli_query ($connect, $update_consulta) or die (mysqli_error($connect));
+
+      header('location: index.php?page=profile&user_ID='.$id_med);
+    }
 }
 
 

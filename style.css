@@ -31,6 +31,7 @@ body{
   width: 45%;
   min-width: 768px;
   background-color: rgba(255, 255, 255, 0.596);
+  border-radius: 5%;
 }
 
 .navbar {
@@ -128,7 +129,7 @@ body{
   margin: -300px auto 100px;
   margin-left: auto;
   margin-right: auto;
-  background-color: rgb(21, 118, 209);
+  background-color:  rgb(29, 98, 167);
   box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
   border-radius: 35px;
   max-width: 768px;
@@ -197,14 +198,14 @@ body{
 }
 
 #info .info-article {
-  background-color:rgb(27, 55, 107);
+  background-color:rgb(60, 80, 128);
   border-radius: 10px 0px 0px 10px;
-  border: 1px solid rgb(27, 55, 107);
+  border: 1px solid rgb(60, 80, 128);
 }
 
 #info h3 {
  padding: 10px 0px;
- color:rgb(21, 118, 209);
+ color:rgb(38, 111, 179);
  font-size: 25px;
  font-weight: 600; 
 }
@@ -274,11 +275,15 @@ body{
   border-top: 1px solid rgb(173, 173, 173);
 }
 
-.footer img{
-  width: 20%;
+.footer .img1{
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  float: left;
-  margin-right: 5px;
+}
+
+.footer .img2{
+  width: 150px;
+  height: 110px;
 }
 
 .footer .line-divider{
@@ -432,7 +437,7 @@ body{
   margin:20px 0;
 }
 
-/* #Reciclar, não tem utilidade no form, mas pode ser usado no footer*/
+
 .social-icon{
   border: 1px solid #ddd;
   border-radius: 50%;
@@ -496,7 +501,7 @@ text-decoration: none;
 }
 
 .overlay-container .overlay {
-  background:  rgb(21, 118, 209);
+  background:  rgb(55, 112, 165);
   background: linear-gradient(to right, rgb(38, 204, 147), rgb(21, 118, 209)) 
   no-repeat 0 0 / cover;
   position: relative;
@@ -577,8 +582,8 @@ text-decoration: none;
 .error {
   width: 100%;
   margin:auto;
-  border: 1px solid #a94442;
-  color: #ff6666;
+  border: 1px solid rgb(169, 68, 66);
+  color: rgb(255, 102, 102);
   background: #f2dede;
   border-radius: 5px;
   text-align: center;
@@ -588,188 +593,28 @@ text-decoration: none;
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 18px;
-  color:#ff6666;
+  color:rgb(255, 102, 102);
 }
 
-/* ########################### FAQ #############################  */
-
-
-#faq {
-  padding: 60px 0 300px;
-}
-
-.faq-search-wrap {
-  padding: 50px 0 60px;
-}
-
-.faq-search-wrap .form-group .form-control,
-.faq-search-wrap .form-group .dd-handle {
-  border-top-right-radius: .25rem;
-  border-bottom-right-radius: .25rem;
-}
-
-.faq-search-wrap .form-group .input-group-append {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.faq-search-wrap .form-group .input-group-append .input-group-text {
-  background: transparent;
-  border: none;
-}
-
-.faq-search-wrap .form-group .input-group-append .input-group-text .feather-icon > svg {
-  height: 18px;
-  width: 18px;
-}
-.bg-teal-light-3 {
-  background-color: #7fcdc1 !important;
-}
-
-.hk-row {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-right: -10px;
-  margin-left: -10px;
-}
-
-@media (min-width: 576px){
-  .mt-sm-60 {
-      margin-top: 60px !important;
-  }
-}
-.mt-30 {
-  margin-top: 30px !important;
-}
-
-.list-group-item.active {
-  background-color: #00acf0;
-  border-color: #00acf0;
-}
-.accordion .card .card-header.activestate {
-  border-width: 1px;
-}
-.accordion .card .card-header {
-  padding: 0;
-  border-width: 0;
-}
-#faq .card.card-lg .card-header, .card.card-lg .card-footer {
-  padding: .9rem 1.5rem;
-}
-.accordion>.card .card-header {
-  margin-bottom: -1px;
-}
-#faq .card .card-header {
-  background: transparent;
-  border: none;
-}
-.accordion.accordion-type-2 .card .card-header > a.collapsed {
-  color: #324148;
-}
-.accordion .card:first-of-type .card-header:first-child > a {
-  border-top-left-radius: calc(.25rem - 1px);
-  border-top-right-radius: calc(.25rem - 1px);
-}
-.accordion.accordion-type-2 .card .card-header > a {
-  background: transparent;
-  color: #00acf0;
-  padding-left: 50px;
-}
-.accordion .card .card-header > a.collapsed {
-  color: #324148;
-  background: transparent;
-}
-.accordion .card .card-header > a {
-  background: #00acf0;
-  color: #fff;
-  font-weight: 500;
-  padding: .75rem 1.25rem;
-  display: block;
-  width: 100%;
-  text-align: left;
-  position: relative;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-}
-#faq a {
-  text-decoration: none;
-  color: #00acf0;
-  -webkit-transition: color 0.2s ease;
-  -moz-transition: color 0.2s ease;
-  transition: color 0.2s ease;
-}
-
-
-.badge.badge-pill {
-  border-radius: 50px;
-}
-.badge.badge-light {
-  background: #eaecec;
-  color: #324148;
-}
-#faq .badge {
-  font-weight: 500;
-  border-radius: 4px;
-  padding: 5px 7px;
-  font-size: 72%;
-  letter-spacing: 0.3px;
-  vertical-align: middle;
-  display: inline-block;
-  text-align: center;
-  text-transform: capitalize;
-}
-.ml-15 {
-  margin-left: 15px !important;
-}
-
-.accordion.accordion-type-2 .card .card-header > a.collapsed:after {
-  content: "\f158";
-}
-
-.accordion.accordion-type-2 .card .card-header > a::after {
-  display: inline-block;
-  font: normal normal normal 14px/1 'Ionicons';
-  text-transform: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: auto;
-  position: absolute;
-  content: "\f176";
-  font-size: 21px;
-  top: 15px;
-  left: 20px;
-}
-
-.mr-15 {
-  margin-right: 15px !important;
-}
 
 /*################## ABOUT ######################*/
 
 .about {
   background-color: white;
-  margin-bottom: 140px;
+  margin-bottom: 80px;
   margin-top: 50px;
 }
 
 .about .icon-boxes h4 {
   font-size: 18px;
-  color: #4b7dab;
+  color: rgb(75, 125, 171);
   margin-bottom: 15px;
 }
 
 .about .icon-boxes h3 {
   font-size: 28px;
   font-weight: 700;
-  color: #2c4964;
+  color: rgb(44, 73, 100);
   margin-bottom: 15px;
 }
 
@@ -784,23 +629,23 @@ text-decoration: none;
   justify-content: center;
   width: 64px;
   height: 64px;
-  border: 2px solid #8dc2f1;
+  border: 2px solid rgb(141, 194, 241);
   border-radius: 50px;
   transition: 0.5s;
 }
 
 .about .icon-box .icon i {
-  color: #1977cc;
+  color: rgb(25, 119, 204);
   font-size: 32px;
 }
 
 .about .icon-box:hover .icon {
-  background: #1977cc;
-  border-color: #1977cc;
+  background: rgb(25, 119, 204);
+  border-color: rgb(25, 119, 204);
 }
 
 .about .icon-box:hover .icon i {
-  color: #fff;
+  color: rgb(255, 255, 255);
 }
 
 .about .icon-box .title {
@@ -811,12 +656,12 @@ text-decoration: none;
 }
 
 .about .icon-box .title a {
-  color: #343a40;
+  color: rgb(52, 58, 64);
   transition: 0.3s;
 }
 
 .about .icon-box .title a:hover {
-  color: #1977cc;
+  color: rgb(25, 119, 204);
 }
 
 .about .icon-box .description {
@@ -828,13 +673,13 @@ text-decoration: none;
 .about .video-box {
   background: url("images/covid19.jpg") center center no-repeat;
   background-size: cover;
-  min-height: 500px;
+  min-height: 400px;
 }
 
 .about .play-btn {
   width: 94px;
   height: 94px;
-  background: radial-gradient(#1977cc 50%, rgba(25, 119, 204, 0.4) 52%);
+  background: radial-gradient(rgb(25, 119, 204) 50%, rgba(25, 119, 204, 0.4) 52%);
   border-radius: 50%;
   display: block;
   position: absolute;
@@ -853,7 +698,7 @@ text-decoration: none;
   height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-left: 15px solid #fff;
+  border-left: 15px solid rgb(255, 255, 255);
   z-index: 100;
   transition: all 400ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
@@ -882,7 +727,7 @@ text-decoration: none;
 }
 
 .about .play-btn:hover::after {
-  border-left: 15px solid #1977cc;
+  border-left: 15px solid rgb(25, 119, 204);
   transform: scale(20);
 }
 
@@ -897,22 +742,11 @@ text-decoration: none;
   border: none;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-left: 15px solid #fff;
+  border-left: 15px solid rgb(255, 255, 255);
   z-index: 200;
   -webkit-animation: none;
   animation: none;
   border-radius: 0;
-}
-
-@-webkit-keyframes pulsate-btn {
-  0% {
-    transform: scale(0.6, 0.6);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1, 1);
-    opacity: 0;
-  }
 }
 
 @keyframes pulsate-btn {
@@ -925,6 +759,15 @@ text-decoration: none;
     opacity: 0;
   }
 }
+
+/*############### TEAM ###############*/
+
+.team {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 50px;
+}
+
 
 /*############### PROFILE ###############*/
 
@@ -969,7 +812,7 @@ text-decoration: none;
 }
 
 #profile .card {
-  background: #ffffff;
+  background: rgb(255, 255, 255);
   border-radius: 5px;
   border: 0;
   margin-bottom: 1rem;
@@ -1014,7 +857,7 @@ text-decoration: none;
 .editprofile .btn-default {
   border-color: rgba(24,28,33,0.1);
   background: rgba(0,0,0,0);
-  color: #4E5155;
+  color: rgb(78, 81, 85);
 }
 
 .editprofile label.btn {
@@ -1022,9 +865,9 @@ text-decoration: none;
 }
 
 .editprofile .btn-outline-primary {
-  border-color: #26B4FF;
+  border-color:rgb(38, 180, 255);
   background: transparent;
-  color: #26B4FF;
+  color: rgb(38, 180, 255);
 }
 
 .editprofile .btn {
@@ -1032,7 +875,7 @@ text-decoration: none;
 }
 
 .editprofile .text-light {
-  color: #babbbc !important;
+  color:rgb(186, 187, 188) !important;
 }
 
 .editprofile .card {
@@ -1110,12 +953,58 @@ text-decoration: none;
 }
 
 
+/*############### COVID FORM ###############*/
+#covidform {
+  margin-top: 75px;
+  margin-bottom: 25px;
+  background-color: white;
+  padding: 30px;
+}
+#covidform form {
+  margin: auto;
+  width: 100%;
+  padding-left: 200px;
+}
+
+#covidform form .temp_in {
+margin-left: -70px!important;
+}
+
+/*############### REPORT FORM ###############*/
+#report {
+  margin-top: 75px;
+  padding: 25px;
+  width: 70%;
+  background-color: white;
+  margin-bottom: 150px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#report .ui-w-80 {
+  width: 150px !important;
+  height: auto;
+}
+
+
+
+
+
 /* ############### Responsive Component ############### */
 
 @media screen and (max-width: 992px) {
 
   .info-background {
     width: 100%;
+  }
+
+}
+
+@media screen and (max-height: 900px) {
+
+  .intro img {
+    max-height: 300px;
+    max-width: 400px;
   }
 
 }

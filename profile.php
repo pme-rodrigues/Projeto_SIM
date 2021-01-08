@@ -1,6 +1,5 @@
 <?php
     include('server.php');
-    include('errors.php');
 ?>
 
 <div id="myModal" class="modal fade">
@@ -146,7 +145,7 @@
         <div class="card-deck">                     
             <div class="card">
                 <div class="card-body text-center">
-                <button class="btn btn-lg btn-primary mt-4"><i class="fas fa-laptop-medical"></i> Realizar Teste de Diagnóstico</button>
+                <a href="index.php?page=formcovid&user_ID=<?= $user_ID;?>"><button class="btn btn-lg btn-primary mt-4"><i class="fas fa-laptop-medical"></i> Realizar Teste de Diagnóstico</button></a>
                 <p class="card-text mt-3"><i>powered by <strong><a href="">COVYDSYM</a></strong></i></p>
                 </div>
             </div>
