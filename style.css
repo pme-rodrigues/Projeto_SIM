@@ -952,6 +952,10 @@ text-decoration: none;
   background-color: rgb(255, 255, 255);
 }
 
+.expand {
+  width: 100%;
+}
+
 
 /*############### COVID FORM ###############*/
 #covidform {
@@ -985,10 +989,6 @@ margin-left: -70px!important;
   width: 150px !important;
   height: auto;
 }
-
-
-
-
 
 /* ############### Responsive Component ############### */
 

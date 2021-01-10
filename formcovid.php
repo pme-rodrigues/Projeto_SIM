@@ -1,6 +1,4 @@
-<?php
-    include('server.php');
-?>
+
 <?php if(!isset($report)):?>
 <section id="covidform">
     <div class="container">

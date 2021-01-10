@@ -1,5 +1,4 @@
 <?php
-    include('server.php');
     include('errors.php');
 ?>
 

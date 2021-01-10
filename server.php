@@ -3,12 +3,13 @@
 include('serv_credentials.php');
 $errors_signin = array();
 $errors_signup = array();
+$errors_edit = array();
 
 //User parameters
 $user_ID; $fullname; $phone; $email; $status; $adress; $type; $fotosrc;
 
 //Patient parameters
-$firstname; $lastname; $cidade; $distrito; $birthdate; $gender; $nif; $seguro; $appointments;
+$firstname; $lastname; $cidade; $distrito; $birthdate; $gender; $nif; $seguro; $appointments; $idade;
 
 //Appointment
 $id_m;
@@ -19,10 +20,33 @@ $report;
 $doctors_list;
 $appointments_list;
 $user_info_list;
+$userdata_list;
+
+//Report
+$user_test_answers;
 
 //connect to DataBase
 $connect = mysqli_connect($servername, $username, $password, $database)
 or die('Error connecting to the server: '. mysqli_error($connect));
+
+if(!isset($_GET['page']) OR (isset($_GET['page']) AND $_GET['page'] == 'homepage')){
+  
+  $fetch_number_pacients = "SELECT COUNT(PACIENTE.id_paciente) FROM PACIENTE";
+  $result = mysqli_query($connect, $fetch_number_pacients);
+  $row = mysqli_fetch_row($result);
+  $number_pacients = $row[0];
+
+  $fetch_number_pro = "SELECT COUNT(USER.id_user) FROM USER WHERE USER.tipo != '1'";
+  $result = mysqli_query($connect, $fetch_number_pro);
+  $row = mysqli_fetch_row($result);
+  $number_pro = $row[0];
+
+  $fetch_number_appoit = "SELECT COUNT(id_consulta) FROM CONSULTA WHERE CONSULTA.estado ='1'";
+  $result = mysqli_query($connect, $fetch_number_appoit);
+  $row = mysqli_fetch_row($result);
+  $number_appoit = $row[0];
+}
+
 
 //Load User Profile Info
 if(isset($_GET['page']) AND $_GET['page']=='profile'){
@@ -74,7 +98,7 @@ if(isset($_GET['page']) AND $_GET['page']=='profile'){
       }
 
       if(isset($_GET['desmarcar'])){
-        $query_desmarcar = "DELETE FROM CONSULTA WHERE id_paciente = '$paciente_ID'";
+        $query_desmarcar = "DELETE FROM CONSULTA WHERE id_paciente = '$paciente_ID' AND CONSULTA.estado ='0'";
         $result = mysqli_query($connect, $query_desmarcar);
         $appointments = 0;
       }
@@ -157,6 +181,36 @@ if(isset($_GET['page']) AND $_GET['page']=='editprofile'){
   }
 }
 
+//Update Password
+if(isset($_POST['changepassword'])){
+
+  $user_ID = $_POST['user_ID'];
+
+  $pass = md5($_POST['password']);
+  $new_pass1 = $_POST['newpassword1'];
+  $new_pass2 = $_POST['newpassword2'];
+
+  //Verify password confirmation
+  if($new_pass1 != $new_pass2){
+    array_push($errors_edit, "Passwords inseridas são diferentes");
+  }
+
+  $check_login_query = "SELECT * FROM USER WHERE (id_user = '$user_ID' AND password= '$pass')";
+  $result = mysqli_query($connect, $check_login_query);
+  $check_login_res = mysqli_num_rows($result);
+
+  if($check_login_res == 1 AND count($errors_edit) == 0){
+    $pass = md5($new_pass1);
+    $update_pass = "UPDATE USER SET USER.password = '$pass' WHERE USER.id_user = '$user_ID'";
+    $result = mysqli_query($connect, $update_pass);
+    header("location: index.php?page=editprofile&success=true&user_ID=$user_ID");
+  }
+  else{
+    header("location: index.php?page=editprofile&success=false&user_ID=$user_ID");
+  }
+  
+}
+
 //User profile update
 if(isset($_POST['updateprofile'])){
 
@@ -187,7 +241,7 @@ if(isset($_POST['updateprofile'])){
   $adress = trim($_POST['adress1']);
   $phone = $_POST['phone'];
   $email = $_POST['email'];
-  
+
   $update_user_query = "UPDATE USER SET email = '$email', nome = '$fullname', morada = '$adress', contacto ='$phone', foto = '$fotosrc' 
                                     WHERE id_user = '$user_ID'";
   $result = mysqli_query($connect, $update_user_query);
@@ -229,9 +283,12 @@ if(isset($_POST['updateprofile'])){
 
     mysqli_commit($connect);
   }
+  if($_SESSION['user_ID'] == $_POST['user_ID']) 
+  $_SESSION['username'] = trim($_POST['firstname']);
 
   header("location: index.php?page=editprofile&success=true&user_ID=$user_ID");
 }
+
 
 //User Registration
 //Patient
@@ -379,7 +436,7 @@ if(isset($_POST['signIn'])){
         $path = 'profile&user_ID='.$_SESSION['user_ID'];
         break; 
       case 3:
-        $path = 'homepage';
+        $path = 'researcher';
     }
     header('location: index.php?page='.$path);
   }
@@ -387,7 +444,7 @@ if(isset($_POST['signIn'])){
 }
 
 //List Users
-if($_GET['page'] =='dashboard'){
+if(isset($_GET['page']) AND $_GET['page'] =='dashboard'){
 
 //LIST PATIENTS
 $all_patient_query = "SELECT USER.id_user, USER.nome, PACIENTE.nif, IDADE.idade FROM USER, PACIENTE, IDADE WHERE USER.id_user = PACIENTE.id_user 
@@ -401,7 +458,7 @@ $result = mysqli_query($connect ,$all_pro_query);
 $users_pro = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-if(isset($_GET['page']) AND $_GET['page'] = 'formcovid'){
+if(isset($_GET['page']) AND $_GET['page'] == 'formcovid'){
     if(isset($_GET['user_ID'])){
         $user_ID = $_GET['user_ID'];
     }
@@ -452,8 +509,6 @@ if(isset($_GET['page']) AND $_GET['page'] = 'formcovid'){
 
       //Get diagnostic
       include('arvore.php');
-
-      //
       $report = TRUE;
 
       $query_get_user_information = "SELECT USER.nome, USER.email, USER.foto FROM USER WHERE USER.id_user ='$user_ID'";
@@ -480,5 +535,47 @@ if(isset($_GET['page']) AND $_GET['page'] = 'formcovid'){
     }
 }
 
+if(isset($_GET['page']) AND $_GET['page'] == 'research_data'){
+  if(isset($_GET['id_f'])){
+
+    $id_fatores = $_GET['id_f'];
+
+    $fetch_info = "SELECT * FROM FATORES_RISCO WHERE FATORES_RISCO.id_fatores_risco = '$id_fatores'";
+    $result = mysqli_query($connect, $fetch_info) or die (mysqli_error($connect));
+    $user_test_answers = mysqli_fetch_assoc($result);
+
+    $id_paciente = $user_test_answers['id_paciente'];
+    $id_idade = $user_test_answers['id_idade'];
+    $id_genero = $user_test_answers['id_genero'];
+
+    $fetch_user_info = "SELECT PACIENTE.Cidade, PACIENTE.distrito, IDADE.idade, GENERO.genero FROM PACIENTE, IDADE, GENERO 
+                          WHERE PACIENTE.id_paciente = '$id_paciente' AND IDADE.id_idade = '$id_idade' AND GENERO.id_genero = '$id_genero'";
+    $result = mysqli_query($connect, $fetch_user_info) or die (mysqli_error($connect));
+    $user_info = mysqli_fetch_assoc($result);
+
+    $from = new DateTime($user_info['idade']);
+    $to   = new DateTime('today');
+    $idade =  $from->diff($to)->y;
+
+    if($user_info['genero'] == 1){
+      $gender = "Masculino"; 
+    }
+    else{
+      $gender = "Feminino";
+    }
+    
+  }
+}
+
+if(isset($_GET['page']) AND $_GET['page'] == 'researcher'){
+
+  //User Test Results
+  $query_select_finished_appointments = "SELECT CONSULTA.id_fatores_risco, CONSULTA.data, DIAGNOSTICO.diagnostico_md FROM CONSULTA, DIAGNOSTICO 
+                                        WHERE CONSULTA.estado = '1' AND CONSULTA.id_diagnostico_med = DIAGNOSTICO.id_diagnostico";
+  $result =  mysqli_query($connect, $query_select_finished_appointments) or die (mysqli_error($connect));
+  $userdata_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+  include('graphics.php');
+}
 
 ?>

@@ -1,20 +1,18 @@
-<?php
-    include('server.php');
-?>
+
 
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
             <?php if($_GET['op'] == 'mar'):?>
-                <h5 class="modal-title">Registo Realizado com Sucesso</h5>
+                <h4 class="modal-title">Registo Realizado com Sucesso<i class="fas fa-check-circle ml-2 text-success"></i></h4>
             <?php endif; ?>
             <?php if($_GET['op'] == 'des'):?>
-                <h5 class="modal-title">Consulta Desmarcada</h5>
+                <h4 class="modal-title">Consulta Desmarcada<i class="fas fa-check-circle ml-2 text-success"></i></h4>
             <?php endif; ?>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
@@ -28,7 +26,7 @@
             </div>
             <div class="modal-footer">
                 <a href="index.php?page=profile&user_ID=<?= $user_ID;?>&desmarcar"><button type="button" class="btn btn-danger">Desmarcar</button></a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
@@ -50,7 +48,7 @@
 
                         <?php if($_SESSION['type'] == 0 OR $_SESSION['user_ID'] == $user_ID):?>
                         <div class="edit-profile">
-                        <a href="index.php?page=editprofile&user_ID=<?= $user_ID; ?>"><button class="btn btn-light">Editar Perfil</button></a>
+                        <a href="index.php?page=editprofile&user_ID=<?= $user_ID; ?>"><button class="btn btn-light"><i class="fas fa-cog mr-2"></i>Editar Perfil</button></a>
                         </div>
                         <?php endif; ?>
 					</div>
@@ -72,7 +70,7 @@
                             <tr>        
                                 <td>
                                     <strong>
-                                        Nome                                           
+                                    <i class="fas fa-user mr-2"></i>Nome                                           
                                     </strong>
                                 </td>
                                 <td class="text-primary">
@@ -82,7 +80,7 @@
                             <tr>    
                                 <td>
                                     <strong>  
-                                        Email                                               
+                                    <i class="fas fa-envelope mr-2"></i>Email                                               
                                     </strong>
                                 </td>
                                 <td class="text-primary">
@@ -92,8 +90,7 @@
                             <tr>        
                                 <td>
                                     <strong>
-                                        <span class="glyphicon glyphicon-cloud text-primary"></span>  
-                                        Contacto                                                
+                                        <i class="fas fa-phone-alt mr-2"></i>Contacto                                                
                                     </strong>
                                 </td>
                                 <td class="text-primary">
@@ -103,8 +100,7 @@
                             <tr>        
                                 <td>
                                     <strong>
-                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
-                                        Cargo                                                
+                                    <i class="fas fa-id-card-alt mr-2"></i>Cargo                                                
                                     </strong>
                                 </td>
                                 <td class="text-primary">
@@ -114,15 +110,14 @@
                             <?php if($status == "Utente" ): ?>
                             <tr>        
                                 <td>
-                                    <strong>
-                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
-                                        Marcações                                               
+                                    <strong> 
+                                    <i class="far fa-calendar-check mr-2"></i>Marcações                                               
                                     </strong>
                                 </td>
                                 <td class="text-primary">
                                 <?= $appointments ?> 
                                 <?php if($appointments != 0):?>
-                                    <a class="text-info text-decoration-none" data-toggle="modal" href="#deleteModal">- Desmarcar Consulta</a>
+                                    <a class="text-success text-decoration-none" data-toggle="modal" href="#deleteModal"><i class="far fa-times-circle mr-1"></i>Desmarcar Consulta</a>
                                 <?php endif; ?>      
                                 </td>
                             </tr>
@@ -146,15 +141,8 @@
             <div class="card">
                 <div class="card-body text-center">
                 <a href="index.php?page=formcovid&user_ID=<?= $user_ID;?>"><button class="btn btn-lg btn-primary mt-4"><i class="fas fa-laptop-medical"></i> Realizar Teste de Diagnóstico</button></a>
-                <p class="card-text mt-3"><i>powered by <strong><a href="">COVYDSYM</a></strong></i></p>
+                <p class="card-text mt-3"><i>powered by <strong><a class="text-decoration-none" href="#">COVYDSYM</a></strong></i></p>
                 </div>
-            </div>
-
-            <div class="card">
-            <div class="card-body text-center">
-                <button class="btn btn-lg btn-info mt-4"><i class="fas fa-notes-medical"></i> Respostas ao Teste de Diagnóstico</button>
-                <p class="card-text mt-3"><i>powered by <strong><a href="">COVYDSYM</a></strong></i></p>    
-            </div>
             </div>
     </div>
 
@@ -167,8 +155,8 @@
         <div class="card-deck">                     
             <div class="card">
                 <div class="card-body text-center">
-                <button class="btn btn-lg btn-primary mt-4" data-toggle="collapse" href="#collapse"><i class="fas fa-laptop-medical"></i> Marcar Diagnóstico</button>
-                <p class="card-text mt-3"><i>powered by <strong><a href="">COVYDSYM</a></strong></i></p>
+                <button class="btn btn-lg btn-primary mt-4" data-toggle="collapse" href="#collapse"><i class="fas fa-laptop-medical mr-2"></i> Marcar Diagnóstico</button>
+                <p class="card-text mt-3 text-decoration-none"><i>powered by <strong><a class="text-decoration-none" href="#">COVYDSYM</a></strong></i></p>
                 </div>
             </div>
         </div>
@@ -176,7 +164,7 @@
         <div class="card filterable">
                 <div class="card-header">
                     <div class="float-right">
-                        <button class="btn btn-light btn-xs btn-filter mb-1"><span class="glyphicon glyphicon-filter"></span> Filtro</button>
+                        <button class="btn btn-light btn-xs btn-filter mb-1"><i class="fas fa-filter mr-1"></i>Filtro</button>
                     </div>
                 </div>
                 <table class="table">
@@ -190,9 +178,9 @@
                     <tbody>
                         <?php foreach($doctors_list as $doctor): ?>
                         <tr>
-                            <td><?= $doctor['nome'] ?></td>
+                            <td><i class="fas fa-user-md mr-2"></i><?= $doctor['nome'] ?></td>
                             <td><?= $doctor['Total'] ?></td>
-                            <td><a href="index.php?page=profile&user_ID=<?= $_SESSION['user_ID'];?>&medic_id=<?= $doctor['id_user'];?>"> Marcar Consulta</a></td>
+                            <td><a class="text-decoration-none" href="index.php?page=profile&user_ID=<?= $_SESSION['user_ID'];?>&medic_id=<?= $doctor['id_user'];?>">Marcar Consulta<i class="fas fa-notes-medical ml-2"></i></a></td>
                         </tr>
                         <?php endforeach;?>
                     </tbody>
@@ -219,8 +207,8 @@
                 <table class="table">
                     <thead class="tablehead">
                         <tr class="filters">
-                            <th><input type="text" class="form-control" placeholder="ID" disabled></th>
                             <th><input type="text" class="form-control" placeholder="Nome" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Data da Marcação" disabled></th>
                             <th></th>
                             <th></th>
                         </tr>

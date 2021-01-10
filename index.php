@@ -2,6 +2,7 @@
 
 <?php 
   session_start();
+  include('server.php');
 ?>
 
 <html lang="en">
@@ -32,12 +33,6 @@
           </button>
       <div class="collapse navbar-collapse justify-content-start" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">     
-          
-        <?php if(isset($_SESSION['type']) AND $_SESSION['type']==0): ?>
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?page=dashboard">Dashboard</a>
-          </li>
-          <?php endif; ?>
 
           <li class="nav-item">
             <a class="nav-link" href="index.php?page=homepage#about">Sobre Nós</a>
@@ -53,7 +48,13 @@
             </a>
             <div class="dropdown-menu">
             <a href="index.php?page=profile&user_ID=<?= $_SESSION['user_ID'] ?>" class="dropdown-item"><i class="fas fa-user-circle mr-2"></i>Perfil </a>
-            <a href="" class="dropdown-item"><i class="fas fa-user-cog mr-2"></i>Definições </a>
+            <a href="index.php?page=editprofile&user_ID=<?= $_SESSION['user_ID'] ?>" class="dropdown-item"><i class="fas fa-user-cog mr-2"></i>Definições </a>
+            <?php if($_SESSION['type'] == 0): ?>
+            <a href="index.php?page=dashboard" class="dropdown-item"><i class="fas fa-tools mr-2"></i>Administrador</a>
+            <?php endif; ?>
+            <?php if($_SESSION['type'] == 3): ?>
+            <a href="index.php?page=researcher" class="dropdown-item"><i class="fas fa-microscope mr-2"></i>Investigador</a>
+            <?php endif; ?>
             <div class="dropdown-divider"></div>
             <a href="index.php?page=signout" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2"></i>Sair </a>
             </div>
@@ -115,6 +116,13 @@ if(isset($_GET['page'])){
     include('report.php');
     break;
 
+    case 'researcher':
+    include('researcher.php');
+    break;
+
+    case 'research_data':
+    include('research_data.php');
+    break;
   }
 }
 else include('homepage.php');
@@ -135,9 +143,9 @@ else include('homepage.php');
        <h6 class="text-uppercase font-weight-bold">Links úteis</h6>
        <hr class="line-divider">
        <ul class="list-unstyled">
-         <li class="my-2"><a class="text-decoration-none" href="index.php?page=homepage">Início </a></li>
-         <li class="my-2"><a class="text-decoration-none" href="index.php?page=homepage#about"> Sobre Nós</a></li>
-         <li class="my-2"><a class="text-decoration-none" href="https://covid19.min-saude.pt/"> Notícias </a></li>
+         <li class="my-2"><a class="text-decoration-none" href="index.php?page=homepage"><i class="fas fa-home mr-2"></i>Início </a></li>
+         <li class="my-2"><a class="text-decoration-none" href="index.php?page=homepage#about"><i class="fas fa-user-friends mr-2"></i>Sobre Nós</a></li>
+         <li class="my-2"><a class="text-decoration-none" href="https://covid19.min-saude.pt/"><i class="far fa-newspaper mr-2"></i>Notícias </a></li>
        </ul>
      </div>
      <div class="col-md-4 mx-auto mb-4">

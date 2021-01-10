@@ -10,9 +10,24 @@
     <div class="welcome text-center">
       <h1>Bem-vindo ao <span style="letter-spacing:3px">COVIDSYM</span></h1>
       <br>
+
+      <?php if(!isset($_SESSION['authuser'])): ?>
       <a roll="button"  href="index.php?page=sign" class="btn check-up mx-3">
-        <i class="fas fa-user-md mx-2"></i>Área Pessoal</a>
-      <button type="button" class="btn read-more mx-3">Fale Connosco</button>
+      <i class="fas fa-sign-in-alt mx-2"></i>Iniciar Sessão</a>
+      <?php endif; ?>
+
+      <?php if(isset($_SESSION['authuser']) AND $_SESSION['type'] == 1): ?>
+      <a roll="button"  href="index.php?page=profile&user_ID=<?= $_SESSION['user_ID'] ?>" class="btn check-up mx-3">
+        <i class="fas fa-user-md mx-2"></i>Marcar Consulta</a>
+      <?php endif; ?>
+
+      <?php if(isset($_SESSION['authuser']) AND $_SESSION['type'] != 1): ?>
+      <a roll="button"  href="index.php?page=profile&user_ID=<?= $_SESSION['user_ID'] ?>" class="btn check-up mx-3">
+      <i class="fas fa-user mx-2"></i>Área Pessoal</a>
+      <?php endif; ?>
+
+      <a roll="button"  href="mailto:contact@covidsym.com" class="btn read-more mx-3">
+      <i class="fas fa-paper-plane mx-2"></i>Fale Connosco</a>
     </div>
   </div>
 </section>
@@ -36,25 +51,25 @@
 <section id="statistics">
  <div class="container-fluid">
   <div class="card-deck">
-    <div class="card bg-light">
+    <div class="card bg-white">
       <div class="card-body text-center">
       <p class="card-text widget"><i class="fas fa-users"></i></p>
-      <p class="card-text">Número de Utilizadores</p>
-      <p class="card-text data">2010</p>
+      <p class="card-text">Número de Utentes do COVIDSYM</p>
+      <h3 class="card-text text-primary"><?= $number_pacients; ?></h3>
       </div>
     </div>
-    <div class="card bg-light">
-      <div class="card-body text-center">
-      <p class="card-text widget"><i class="fas fa-comment-medical"></i></i></p>
-      <p class="card-text">Número de Materiais</p>
-      <p class="card-text">1000</p>
-      </div>
-    </div>
-    <div class="card bg-light">
+    <div class="card bg-white">
       <div class="card-body text-center">
       <p class="card-text widget"><i class="fas fa-user-tie"></i></p>
-      <p class="card-text">Número de Profissionais</p>
-      <p class="card-text">10</p>
+      <p class="card-text">Número de Profissionais do COVIDSYM</p>
+      <h3 class="card-text text-primary"><?= $number_pro; ?></h3>
+      </div>
+    </div>
+    <div class="card bg-white">
+      <div class="card-body text-center">
+      <p class="card-text widget"><i class="fas fa-clipboard-list"></i></i></p>
+      <p class="card-text">Número de Consultas Realizadas </p>
+      <h3 class="card-text text-primary"><?= $number_appoit; ?></h3>
       </div>
     </div>
   </div>

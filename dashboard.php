@@ -1,5 +1,4 @@
 <?php
-    include('server.php');
     include('errors.php');
 ?>
 <!------ Modal box for user registration and deleting---------->

@@ -1,13 +1,19 @@
-<?php
-    include('server.php');
-    include('errors.php');
-?>
+
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
+            <?php if($_GET['success'] == 'true'): ?>
             <div class="modal-header">
                 <h5 class="modal-title">Alterações Realizadas com Sucesso</h5>
             </div>
+            <?php endif; ?>
+            
+            <?php if($_GET['success'] == 'false'): ?>
+            <div class="modal-header">
+                <h4 class="modal-title"><i class="fas fa-exclamation-circle mr-2 text-danger"></i>Não foi possível concluir a operação</h4>
+            </div>
+            <?php endif; ?>
+
             <div class="modal-footer">
             <a href="index.php?page=profile&user_ID=<?= $user_ID?>"><button type="button" class="btn btn-primary">Perfil</button></a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -43,8 +49,8 @@
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
-                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">General</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Change password</a>
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">Geral</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-change-password">Mudar password</a>
                         <?php if($_SESSION['type']==0):?>
                         <a class="list-group-item list-group-item-action mt-4" data-toggle="modal" href="#deleteModal">Delete User</a>
                         <?php endif;?>
@@ -141,28 +147,28 @@
                     </div>
 
                     <div class="tab-pane fade" id="account-change-password">
-                        <form action="">
+                        <form action="index.php?page=editprofile" method="POST">
                         <div class="card-body pb-2">
 
-                                <div class="form-group">
-                                <label class="form-label">Current password</label>
-                                <input type="password" class="form-control">
-                                </div>
+                            <div class="form-group">
+                                <label class="form-label">Password atual</label>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
 
-                                <div class="form-group">
-                                <label class="form-label">New password</label>
-                                <input type="password" class="form-control">
-                                </div>
+                            <div class="form-group">
+                                <label class="form-label">Nova password</label>
+                                <input type="password" name="newpassword1" class="form-control" required>
+                            </div>
 
-                                <div class="form-group">
-                                <label class="form-label">Repeat new password</label>
-                                <input type="password" class="form-control">
-                                </div>
+                            <div class="form-group">
+                                <label class="form-label">Confirme a nova password</label>
+                                <input type="password" name="newpassword2" class="form-control" required>
+                            </div>
                         
                         </div>
                         <div class="text-right my-3 mr-2">
                         <input type="hidden" name="user_ID" value="<?= $user_ID?>">
-                        <button type="submit" name="changepassword" class="btn btn-primary">Save changes</button>&nbsp;
+                        <button type="submit" name="changepassword" class="btn btn-primary">Guardar Alterações</button>&nbsp;
                         <a href="index.php?page=profile&user_ID=<?= $user_ID?>"><button type="button" class="btn btn-default">Voltar</button></a>
                         </div>
                         </form>
@@ -174,7 +180,7 @@
 
 </section>
 
-<?php if(isset($_GET['success']) AND $_GET['success']==true){
+<?php if(isset($_GET['success'])){
 echo '<script>';
     echo '$(document).ready(function(){';
         echo '$("#myModal").modal(\'show\');';

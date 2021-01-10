@@ -3,6 +3,7 @@
 $query_select_genero="SELECT genero FROM genero WHERE id_genero = '$id_genero'";
 $results_genero = mysqli_query($connect, $query_select_genero);
 $genero = mysqli_fetch_assoc($results_genero);
+if($genero['genero'] == 1) $genero['genero'] = 0; else $genero['genero'] = 1;
 
 //get birthdate
 $query_select_data_nascimento="SELECT idade FROM idade WHERE id_idade = '$id_idade'";
@@ -16,10 +17,12 @@ $from = new DateTime($data);
 $to   = new DateTime('today');
 $idade =  $from->diff($to)->y;
 
+//convert temperature to Fahrenheit
+$temp_f = ($temperatura* 9/5) + 32;
 	
 $AGE = $idade;                     // age
 $GENDER   = $genero['genero'];     // gender 0-> masculino, 1-> feminino
-$BODY_TEM = $temperatura;          // body temperature (em Fahrenheit (°F)) 
+$BODY_TEM = $temp_f;               // body temperature (em Fahrenheit (°F)) 
 $DRY_COUG = $tosse;                // dry cough 
 $SORE_THR = $garganta;             // sore throat
 $WEAKNESS = $fraqueza;             // weakness 

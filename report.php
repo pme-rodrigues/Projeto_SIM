@@ -1,6 +1,5 @@
 
 <section id='report'>
-    
     <div class="container light-style flex-grow-1 container-p-y">
     <h4 class="font-weight-bold py-3 mb-4">
         Diagnóstico
@@ -17,7 +16,7 @@
                     </div>
                     <hr class="border-light my-1">
                     <div class="card-body text-left">
-                        <h4 class="pb-3" >Respostas ao Inquérito</h4>
+                        <h4 class="pb-3">Respostas ao Inquérito</h4>
                         <div class="row d-flex flex-row align-items-stretch text-justify">
                             <div class="col-4">
                             <p>Temperatura Corporal:</p>
