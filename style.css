@@ -937,7 +937,7 @@ text-decoration: none;
 .filterable {
   margin-top: 15px;
 }
-.filterable .panel-heading .pull-right {
+.filterable{
   margin-top: 10px;
 }
 .filterable .filters input[disabled] {
@@ -953,7 +953,7 @@ text-decoration: none;
 }
 
 .expand {
-  width: 100%;
+  width: 100%!important;
 }
 
 
@@ -1000,13 +1000,16 @@ margin-left: -70px!important;
 
 }
 
-@media screen and (max-height: 900px) {
+@media screen and (max-height: 830px) {
 
-  .intro img {
-    max-height: 300px;
-    max-width: 400px;
+  #welcome {
+    margin-top: -100px;
+  
   }
 
+  .sign-form{
+    margin-top: 120px;
+  }
 }
 
 @media screen and (max-width: 786px) {

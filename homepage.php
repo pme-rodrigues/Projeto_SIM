@@ -96,7 +96,7 @@
 <section class="team">
   <div class="container">
     <div class="col-12 d-flex flex-column align-items-stretch justify-content-center">
-      <div class="text-center"> <h3>A Equipa</h3> <img class="rounded" src="images/Apresentação3.png" alt="" width="800"> </div>
+      <div class="text-center"> <h3>A Equipa</h3> <img class="rounded" src="images/Apresentação3.png" alt="" width="90%"> </div>
     </div>
   </div>
 </section>

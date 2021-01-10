@@ -1,4 +1,8 @@
-
+<?php
+    if(!isset($_SESSION['authuser'])) header('location: index.php?page=sign');
+    else if(isset($_SESSION['authuser']) AND $_SESSION['type'] == 1 AND $_SESSION['user_ID'] != $user_ID) header('location: index.php?page=homepage');
+    else if(isset($_SESSION['authuser']) AND $_SESSION['type'] == 3 AND $_SESSION['user_ID'] != $user_ID) header('location: index.php?page=homepage');
+?>
 
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
@@ -195,13 +199,13 @@
 <?php if($_SESSION['type'] == 2 AND $_SESSION['user_ID']== $user_ID):?>
 <section class="consult">
     <div class="container tbl">
-        <h3>Tabela de Consultas</h3>
+        <h3>Consultas Pendentes</h3>
             <hr>
             <div class="row">
             <div class="card filterable">
                 <div class="card-header">
                     <div class="float-right">
-                        <button class="btn btn-light btn-xs btn-filter mb-1"><span class="glyphicon glyphicon-filter"></span> Filtro</button>
+                        <button class="btn btn-light btn-xs btn-filter mb-1"><i class="fas fa-filter mr-1"></i>Filtro</button>
                     </div>
                 </div>
                 <table class="table">
@@ -218,7 +222,40 @@
                         <tr>
                             <td><?= $appointment['nome'] ?></td>
                             <td><?= $appointment['data'] ?></td>
-                            <td><a href="index.php?page=profile&user_ID=<?= $appointment['id_user'];?>"> Realizar Consulta</a></td>
+                            <td><a class="text-decoration-none" href="index.php?page=profile&user_ID=<?= $appointment['id_user'];?>"> Realizar Consulta</a></td>
+                        </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
+        </div>               
+     </div>
+</div>
+<div class="container tbl">
+        <h3>Consultas Finalizadas</h3>
+            <hr>
+            <div class="row">
+            <div class="card filterable">
+                <div class="card-header">
+                    <div class="float-right">
+                        <button class="btn btn-light btn-xs btn-filter mb-1"><i class="fas fa-filter mr-1"></i>Filtro</button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead class="tablehead">
+                        <tr class="filters">
+                            <th><input type="text" class="form-control" placeholder="Nome" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Diagnóstico" disabled></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($diagn_list as $diag): ?>
+                        <tr>
+                            <td><?= $diag['nome'] ?></td>
+                            <td><?php if($diag['diagnostico_md'] == "Realizar") echo 'Realizar Teste COVID-19'; else echo 'Não Realizar Teste COVID-19'; ?></td>
+                            <td><a href="index.php?page=diagnostic_data&id=<?= $diag['id_user'];?>"> Ver mais</a></td>
                         </tr>
                         <?php endforeach;?>
                     </tbody>

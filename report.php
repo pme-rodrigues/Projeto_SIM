@@ -30,7 +30,7 @@
                             <p>Diabetes:</p>
                             </div>
                             <div class="col-2">
-                            <p><?= $temperatura; ?></p>
+                            <p><?= $temperatura; ?>&#8451;</p>
                             <p><?php if($tosse == 1) echo 'Sim'; else echo'Não'?></p>
                             <p><?php if($garganta == 1) echo 'Sim'; else echo'Não'?></p>
                             <p><?php if($fraqueza == 1) echo 'Sim'; else echo'Não'?></p>
@@ -84,8 +84,8 @@
                             <div class="form-group pt-2 pb-4">
                                 <select name="diag_med" class="form-control" required>
                                     <option value="" hidden selected disabled>Diagnóstico</option>
-                                    <option value="Realizar">Realizar Teste</option>
-                                    <option value="Nao Realizar">Não Realizar Teste</option>
+                                    <option value="Realizar">Realizar Teste COVID-19</option>
+                                    <option value="Nao Realizar">Não Realizar Teste COVID-19</option>
                                 </select>   
                             </div>
                             <div class="form-group">

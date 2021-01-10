@@ -1,3 +1,8 @@
+<?php
+    if(!isset($_SESSION['authuser'])) header('location: index.php?page=sign');
+    else if(isset($_SESSION['authuser']) AND $_SESSION['type'] != 3) header('location: index.php?page=homepage');
+?>
+
 <section id='report'>
     <div class="container light-style flex-grow-1 container-p-y">
     <h4 class="font-weight-bold py-3 mb-4">
@@ -7,7 +12,7 @@
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-12 pt-0">
                     <div class="card-body ">
-                            <h4 class="pb-2">Informações do Utente</h4>
+                            <h4 class="pb-2">Informações do Utente <i class="far fa-user ml-2"></i></h4>
                             <p>Género: <?= $gender; ?></p>
                             <p>Idade: <?= $idade; ?></p>
                             <p>Cidade: <?= $user_info['Cidade']; ?></p>
@@ -15,7 +20,7 @@
                     </div>
                     <hr class="border-light my-1">
                     <div class="card-body text-left">
-                        <h4 class="pb-3">Respostas ao Inquérito</h4>
+                        <h4 class="pb-3 d-block">Respostas ao Inquérito<i class="fas fa-clipboard-list ml-2"></i></h4>
                         <div class="row d-flex flex-row align-items-stretch text-justify">
                             <div class="col-4">
                             <p>Temperatura Corporal:</p>
@@ -29,15 +34,15 @@
                             <p>Diabetes:</p>
                             </div>
                             <div class="col-2">
-                            <p><?= $user_test_answers['temp_corporal']; ?></p>
-                            <p><?php if($user_test_answers['tosse_seca'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['dor_garganta'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['fraqueza'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['prob_respiratorio'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['sonolencia'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['dor_peito'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['viagens'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['diabetes'] == 1) echo 'Sim'; else echo'Não';?></p>
+                            <p><?= $user_test_answers['temp_corporal']; ?>&#8451;</p>
+                            <?php if($user_test_answers['tosse_seca'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['dor_garganta'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['fraqueza'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['prob_respiratorio'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['sonolencia'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['dor_peito'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['viagens'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['diabetes'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
                             </div>
                             <div class="col-4">
                             <p>Doença Cardíaca:</p>
@@ -51,14 +56,14 @@
                             
                             </div>
                             <div class="col-2">
-                            <p><?php if($user_test_answers['doenca_cardiaca'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['doenca_pulmonar'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['prog_sintomas'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['press_arterial'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['doenca_renal'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['perda_apetite'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['perda_olfato'] == 1) echo 'Sim'; else echo'Não';?></p>
-                            <p><?php if($user_test_answers['avc'] == 1) echo 'Sim'; else echo'Não';?></p>
+                            <?php if($user_test_answers['doenca_cardiaca'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['doenca_pulmonar'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['prog_sintomas'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['press_arterial'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['doenca_renal'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['perda_apetite'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['perda_olfato'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
+                            <?php if($user_test_answers['avc'] == 1) echo '<p class="text-success"> Sim </p>'; else echo'<p class="text-danger"> Não </p>';?>
                             </div>
                         </div>
                     </div>

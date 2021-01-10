@@ -1,16 +1,21 @@
 <?php
-    include('errors.php');
+    if(!isset($_SESSION['authuser'])) header('location: index.php?page=sign');
+    else if(isset($_SESSION['authuser']) AND $_SESSION['type'] != 0) header('location: index.php?page=homepage');
 ?>
+
 <!------ Modal box for user registration and deleting---------->
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <?php if($_GET['op'] == 'reg'):?>
-                <h5 class="modal-title">Registo Realizado com Sucesso</h5>
+            <?php if($_GET['success'] == 'true' AND $_GET['op'] == 'reg'):?>
+                <h4 class="modal-title">Registo Realizado com Sucesso<i class="fas fa-check-circle ml-2 text-success"></i></h4>
             <?php endif; ?>
-            <?php if($_GET['op'] == 'del'):?>
-                <h5 class="modal-title">Ficha de Utilizador Eliminada</h5>
+            <?php if($_GET['success'] == 'false' AND $_GET['op'] == 'reg'):?>
+                <h4 class="modal-title"><i class="fas fa-exclamation-circle mr-2 text-danger"></i>Não foi possível concluir a operação</h4>
+            <?php endif; ?>
+            <?php if($_GET['success'] == 'true' AND $_GET['op'] == 'del'):?>
+                <h4 class="modal-title">Ficha de Utilizador Eliminada<i class="fas fa-check-circle ml-2 text-success"></i></h4>
             <?php endif; ?>
             </div>
             <div class="modal-footer">
@@ -32,12 +37,12 @@
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
                         <p class="h5 pl-3 pt-4 ">Gestão de Utilizadores</p>
-                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-utente">Utentes</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-profissional">Profissionais</a>
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-utente"><i class="fas fa-user-friends mr-2"></i>Utentes</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-profissional"><i class="fas fa-user-md mr-2"></i>Profissionais</a>
                         <hr class="border-light my-4">
                         <p class="h5 pl-3 pt-4 ">Registo de Utilizadores</p>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#registo-paciente">Registar Utente</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#registo-profissional">Registar Profissional</a>              
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#registo-paciente"><i class="fas fa-clipboard-list mr-2"></i>Registar Utente</a>
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#registo-profissional"><i class="fas fa-notes-medical mr-2"></i>Registar Profissional</a>              
                     </div>
                 </div>
             <div class="col-md-9">
@@ -51,17 +56,17 @@
                         <hr class="border-light m-0">
 
                         <div class="card-body">
-                            <div class="row p-2 m-1 bg-light">
+                            <div class="row p-2 m-1 bg-white">
 
                                 
 
-                                <div class="container">
+                                <div class="container expand">
                         
                                     <div class="row">
-                                        <div class="panel panel-primary filterable">
-                                            <div class="panel-heading">
-                                                <div class="pull-right">
-                                                    <button class="btn btn-default btn-xs btn-filter mb-1"><span class="glyphicon glyphicon-filter"></span> Filtro</button>
+                                        <div class="card filterable">
+                                            <div class="card-header">
+                                                <div class="float-right">
+                                                    <button class="btn btn-default btn-xs btn-filter mb-1"><i class="fas fa-filter mr-1"></i>Filtro</button>
                                                 </div>
                                             </div>
                                             <table class="table">
@@ -77,11 +82,11 @@
                                                 <tbody>
                                                     <?php foreach($users as $user): ?> 
                                                     <tr>
-                                                        <td><a href="index.php?page=profile&user_ID=<?= $user['id_user'];?>"><?= $user['id_user']; ?></a></td>
+                                                        <td><a class="text-decoration-none" href="index.php?page=profile&user_ID=<?= $user['id_user'];?>"><?= $user['id_user']; ?><i class="far fa-id-badge ml-1"></i></a></td>
                                                         <td><?= $user['nome']; ?></td>
                                                         <td><?= $user['idade']; ?></td>
                                                         <td><?= $user['nif']; ?></td>
-                                                        <td><a href="index.php?page=editprofile&user_ID=<?= $user['id_user'];?>"> Editar</a></td>
+                                                        <td><a class="text-decoration-none" href="index.php?page=editprofile&user_ID=<?= $user['id_user'];?>">Editar</a></td>
                                                     </tr>
                                                     <?php endforeach; ?> 
                                                 </tbody>
@@ -99,13 +104,13 @@
                                 </div>
                                 <hr class="border-light m-0">
                                 <div class="card-body">
-                                    <div class="row p-2 m-1 bg-light">
-                                        <div class="container">
+                                    <div class="row p-2 m-1 bg-white">
+                                        <div class="container expand">
                                             <div class="row">
-                                                <div class="panel panel-primary filterable">
-                                                    <div class="panel-heading">
-                                                        <div class="pull-right">
-                                                            <button class="btn btn-default btn-xs btn-filter mb-1"><span class="glyphicon glyphicon-filter"></span> Filtro</button>
+                                                <div class="card filterable">
+                                                    <div class="card-header">
+                                                        <div class="float-right">
+                                                            <button class="btn btn-default btn-xs btn-filter mb-1"><i class="fas fa-filter mr-1"></i>Filtro</button>
                                                         </div>
                                                     </div>
                                                     <table class="table">
@@ -121,7 +126,7 @@
                                                         <tbody>
                                                             <?php foreach($users_pro as $user_pro): ?> 
                                                             <tr>
-                                                                <td><a href="index.php?page=profile&user_ID=<?= $user_pro['id_user'];?>"> <?= $user_pro['id_user']; ?></a></td>
+                                                                <td><a class="text-decoration-none" href="index.php?page=profile&user_ID=<?= $user_pro['id_user'];?>"> <?= $user_pro['id_user']; ?><i class="far fa-id-badge ml-2"></i></a></td>
                                                                 <td><?= $user_pro['nome']; ?></td>
                                                                 <td><?= $user_pro['email']; ?></td>
                                                                 <td>
@@ -134,7 +139,7 @@
                                                                     echo $nlist[$user_pro['tipo']];
                                                                     ?>
                                                                 </td>
-                                                                <td><a href="index.php?page=editprofile&user_ID=<?= $user_pro['id_user'];?>"> Editar</a></td>
+                                                                <td><a class="text-decoration-none" href="index.php?page=editprofile&user_ID=<?= $user_pro['id_user'];?>">Editar</a></td>
                                                             </tr>
                                                             <?php endforeach; ?> 
                                                         </tbody>
@@ -155,7 +160,7 @@
                                 <hr class="border-light m-0">
                                 <form action="index.php?page=editprofile" method="POST">
                                         <div class="card-body">
-                                            <p class="h4 py-4 ">Informações Pessoais</p>
+                                            <p class="h4 py-4 ">Informações Pessoais<i class="far fa-user ml-2"></i></p>
                                             <div class="form-row">
                                                 <div class="form-group col-6">
                                                 <label class="form-label">Nome</label>
@@ -192,7 +197,7 @@
                                             </div>
                                             
                                             <hr class="border-light my-4">
-                                            <p class="h4 py-4 ">Informações de Contacto</p>
+                                            <p class="h4 py-4 ">Informações de Contacto<i class="fas fa-phone ml-2"></i></p>
                                             <div class="form-group">
                                             <label class="form-label">Morada</label>
                                                 <input name="adress1" class="form-control" type="text" required>
@@ -214,7 +219,7 @@
                                             </div>
                                             
                                             <hr class="border-light my-4">
-                                            <p class="h4 py-4 ">Informações da Conta</p>                            
+                                            <p class="h4 py-4 ">Informações da Conta<i class="far fa-address-card ml-2"></i></p>                            
                                             <div class="form-group">
                                             <label class="form-label">Email</label>
                                                 <input class="form-control" type="email"  name="email" required>
@@ -244,7 +249,7 @@
                                 <hr class="border-light m-0">
                                 <form action="index.php?page=editprofile" method="POST">
                                         <div class="card-body">
-                                            <p class="h4 py-4 ">Informações Pessoais</p>
+                                            <p class="h4 py-4 ">Informações Pessoais<i class="far fa-user ml-2"></i></p>
                                             <div class="form-row">
                                                 <div class="form-group col-6">
                                                 <label class="form-label">Nome</label>
@@ -267,7 +272,7 @@
                                             </div>
 
                                             <hr class="border-light my-4">
-                                            <p class="h4 py-4 ">Informações de Contacto</p>
+                                            <p class="h4 py-4 ">Informações de Contacto<i class="fas fa-phone ml-2"></i></p>
                                             <div class="form-group">
                                             <label class="form-label">Morada</label>
                                                 <input name="adress1" class="form-control" type="text" required>
@@ -279,7 +284,7 @@
                                             </div>
                                             
                                             <hr class="border-light my-4">
-                                            <p class="h4 py-4 ">Informações da Conta</p>                            
+                                            <p class="h4 py-4 ">Informações da Conta<i class="far fa-address-card ml-2"></i></p>                            
                                             <div class="form-group">
                                             <label class="form-label">Email</label>
                                                 <input class="form-control" type="email"  name="email" required>
@@ -307,7 +312,7 @@
     </div>
 </section>
 
-<?php if(isset($_GET['success']) AND $_GET['success']==true):?> 
+<?php if(isset($_GET['success'])):?> 
 <script>
     $(document).ready(function(){
         $("#myModal").modal('show');

@@ -21,6 +21,7 @@ $doctors_list;
 $appointments_list;
 $user_info_list;
 $userdata_list;
+$diagn_list;
 
 //Report
 $user_test_answers;
@@ -117,7 +118,14 @@ if(isset($_GET['page']) AND $_GET['page']=='profile'){
                               AND PACIENTE.id_paciente = CONSULTA.id_paciente AND CONSULTA.estado = '0' 
                                 AND CONSULTA.id_medico ='$user_ID' ORDER BY CONSULTA.data ASC ";
       $result = mysqli_query($connect, $fetch_appointments);
-      $appointments_list = mysqli_fetch_all($result, MYSQLI_ASSOC);                        
+      $appointments_list = mysqli_fetch_all($result, MYSQLI_ASSOC);
+      
+      $fetch_diagns= "SELECT USER.id_user, USER.nome, DIAGNOSTICO.diagnostico_md, DIAGNOSTICO.diagnostico_site, DIAGNOSTICO.observacoes
+                     FROM USER, PACIENTE, CONSULTA, DIAGNOSTICO WHERE USER.id_user = PACIENTE.id_user 
+                              AND PACIENTE.id_paciente = CONSULTA.id_paciente AND CONSULTA.estado = '1' AND CONSULTA.id_diagnostico_med = DIAGNOSTICO.id_diagnostico
+                                AND CONSULTA.id_medico ='$user_ID' ORDER BY CONSULTA.data DESC ";
+      $result5 = mysqli_query($connect, $fetch_diagns);
+      $diagn_list = mysqli_fetch_all($result5, MYSQLI_ASSOC);
     }
   }
 }
@@ -317,8 +325,8 @@ $type = 1;
   $result = mysqli_query($connect, $check_user_query);
   $check_user_res = mysqli_fetch_assoc($result); //é mais prático que o fetch_row()
 
-  if($check_user_res){
-    if($check_user_res['EMAIL'] == $email) array_push($errors_signup, "O endereço já se encontra registado");
+  if($check_user_res != FALSE){
+     array_push($errors_signup, "O endereço já se encontra registado");
   }
   //If 0 errors occured, insert into DB
   if(count($errors_signup) == 0) {
@@ -367,6 +375,9 @@ $type = 1;
       header('location: index.php?page=homepage');
     }
   }
+  else if(isset($_SESSION['authuser']) AND $_SESSION['type'] == 0){
+    header('location: index.php?page=dashboard&success=false&op=reg');
+  }
 }
 
 //Medic, Researcher and Admin
@@ -379,6 +390,7 @@ if(isset($_POST['signUp_pro'])){
   $pass_conf = $_POST['password2'];
   $type = (int)$_POST['type'];;
   
+
   //Default user profile photo
   $fotosrc = "images/profile.png";
 
@@ -391,9 +403,10 @@ if(isset($_POST['signUp_pro'])){
     $result = mysqli_query($connect, $check_user_query);
     $check_user_res = mysqli_fetch_assoc($result);
   
-    if($check_user_res){
-      if($check_user_res['EMAIL'] == $email) array_push($errors_signup, "O endereço já se encontra registado");
+    if($check_user_res != FALSE){
+      array_push($errors_signup, "O endereço já se encontra registado");
     }
+
     //If 0 errors occured, insert into DB
     if(count($errors_signup) == 0) {
       
@@ -403,11 +416,14 @@ if(isset($_POST['signUp_pro'])){
       mysqli_query($connect, $insert_query);
       header('location: index.php?page=dashboard&success=true&op=reg');
     }
+    else{
+      header('location: index.php?page=dashboard&success=false&op=reg');
+    }
+    
   }
 
 //User Login
 if(isset($_POST['signIn'])){
-
   $email = $_POST['email'];
   $password = md5($_POST['password']);
   $check_login_query = "SELECT * FROM USER WHERE (email = '$email' AND password= '$password')";

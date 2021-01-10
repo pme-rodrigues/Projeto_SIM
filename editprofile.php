@@ -1,10 +1,16 @@
+<?php
+    if(!isset($_SESSION['authuser'])) header('location: index.php?page=sign');
+    else if(isset($_SESSION['authuser']) AND $_SESSION['type'] == 1 AND $_SESSION['user_ID'] != $user_ID) header('location: index.php?page=homepage');
+    else if(isset($_SESSION['authuser']) AND $_SESSION['type'] == 2 AND $_SESSION['user_ID'] != $user_ID) header('location: index.php?page=homepage');
+    else if(isset($_SESSION['authuser']) AND $_SESSION['type'] == 3 AND $_SESSION['user_ID'] != $user_ID) header('location: index.php?page=homepage');
+?>
 
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <?php if($_GET['success'] == 'true'): ?>
             <div class="modal-header">
-                <h5 class="modal-title">Alterações Realizadas com Sucesso</h5>
+                <h4 class="modal-title">Alterações Realizadas com Sucesso<i class="fas fa-check-circle ml-2 text-success"></i></h4>
             </div>
             <?php endif; ?>
             
@@ -65,7 +71,7 @@
                             <img src="<?= $fotosrc ?>" alt="" class="d-block ui-w-80">
                                 <div class="media-body ml-4">
                                 <label class="btn btn-outline-primary">
-                                    Carregar nova foto
+                                    Carregar nova foto <i class="fas fa-upload ml-2"></i>
                                     <input type="file" name="foto" class="account-settings-fileinput">
                                 </label> &nbsp;
                                 </div>

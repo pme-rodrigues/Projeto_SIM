@@ -1,19 +1,25 @@
+<?php
+    if(!isset($_SESSION['authuser'])) header('location: index.php?page=sign');
+    else if(isset($_SESSION['authuser']) AND $_SESSION['type'] != 3) header('location: index.php?page=homepage');
+?>
+
+
 
 <section class="editprofile">
     <div class="container-fluid light-style flex-grow-1 container-p-y">
 
         <h4 class="font-weight-bold py-3 mb-4">
-        Dados Estatísticos
+        Dados Estatísticos <i class="fas fa-chart-bar ml-2"></i>
         </h4>
 
         <div class="card overflow-hidden">
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
-                        <p class="h5 pl-3 pt-4 ">Gráficos e Tabelas</p>
+                        <p class="h5 pl-3 pt-4 ">Gráficos e Tabelas<i class="fas fa-chart-pie ml-2"></i></p>
                         <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-estatisticas">Género e Idade</a>
-                        <hr class="border-light my-4">
-                        <p class="h5 pl-3 pt-4 ">Consultar Dados</p>
+                        <hr class="border-white my-4">
+                        <p class="h5 pl-3 pt-4 ">Consultar Dados<i class="fas fa-hospital-user ml-2"></i></p>
                         <a class="list-group-item list-group-item-action" data-toggle="list" href="#account-utente">Utentes</a>           
                     </div>
                 </div>               
@@ -39,9 +45,9 @@
                         
                                     <div class="row tb1">
                                         <div class="card filterable">
-                                            <div class="card-header">
+                                            <div class="card-header bg-danger">
                                                 <div class="float-right">
-                                                    <button class="btn btn-default btn-xs btn-filter mb-1"><span class="glyphicon glyphicon-filter"></span> Filtro</button>
+                                                    <button class="btn btn-light btn-xs btn-filter mb-1"><i class="fas fa-filter mr-1"></i>Filtro</button>
                                                 </div>
                                             </div>
                                             <table class="table">
@@ -61,12 +67,12 @@
                                                     <?php foreach($symptoms_list as $symptoms): ?>   
                                                     <tr>
                                                         <td><?= $symptoms['temp_corporal']; ?></td>
-                                                        <td><?php if($symptoms['tosse_seca']== 1) echo 'Sim'; else echo'Não';?></td>
-                                                        <td><?php if($symptoms['dor_garganta']== 1) echo 'Sim'; else echo'Não';?></td>
-                                                        <td><?php if($symptoms['fraqueza']== 1) echo 'Sim'; else echo'Não';?></td>
-                                                        <td><?php if($symptoms['sonolencia']== 1) echo 'Sim'; else echo'Não';?></td>
-                                                        <td><?php if($symptoms['perda_apetite']== 1) echo 'Sim'; else echo'Não';?></td>
-                                                        <td><?php if($symptoms['perda_olfato']== 1) echo 'Sim'; else echo'Não';?></td>
+                                                        <?php if($symptoms['tosse_seca']== 1) echo '<td class="text-success"> Sim </td>'; else echo'<td class="text-danger"> Não </td>';?>
+                                                        <?php if($symptoms['dor_garganta']== 1) echo '<td class="text-success"> Sim </td>'; else echo'<td class="text-danger"> Não </td>';?>
+                                                        <?php if($symptoms['fraqueza']== 1) echo '<td class="text-success"> Sim </td>'; else echo'<td class="text-danger"> Não </td>';?>
+                                                        <?php if($symptoms['sonolencia']== 1) echo '<td class="text-success"> Sim </td>'; else echo'<td class="text-danger"> Não </td>';?>
+                                                        <?php if($symptoms['perda_apetite']== 1) echo '<td class="text-success"> Sim </td>'; else echo'<td class="text-danger"> Não </td>';?>
+                                                        <?php if($symptoms['perda_olfato']== 1) echo '<td class="text-success"> Sim </td>'; else echo'<td class="text-danger"> Não </td>';?>
                                                         <td><?php if($symptoms['genero']== 1) echo 'Masculino'; else echo'Feminino';?></td>
                                                     </tr>
                                                     <?php endforeach; ?>  
@@ -154,29 +160,29 @@
 
                         <hr class="border-light m-0">
 
-                        <div class="card-body mt-3 text-center">
+                        <div class="card-body mt-3">
                             <div class="row p-2 m-1 bg-white">
                                 <div class="container">
                                     <div class="row tb1">
                                         <div class="card filterable expand">
-                                            <div class="card-header">
+                                            <div class="card-header bg-info">
                                                 <div class="float-right">
-                                                    <button class="btn btn-default btn-xs btn-filter mb-1"><span class="glyphicon glyphicon-filter"></span> Filtro</button>
+                                                    <button class="btn btn-light btn-xs btn-filter mb-1"><i class="fas fa-filter mr-1"></i>Filtro</button>
                                                 </div>
                                             </div>
                                             <table class="table" style="width:100%;">
                                                 <thead class="tablehead">
                                                     <tr class="filters">
                                                         <th><input type="text" class="form-control" placeholder="Data da Consulta" disabled></th>
-                                                        <th><input type="text" class="form-control" placeholder="Resultado" disabled></th>
+                                                        <th><input type="text" class="form-control" placeholder="Resultado do Diagnóstico" disabled></th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php foreach($userdata_list as $userdata): ?>   
                                                     <tr>
-                                                        <td><?= $userdata['data']; ?></td>
-                                                        <td><?php if($userdata['diagnostico_md'] == "Realizar") echo 'Realizar Teste'; else echo'Não Realizar Teste';?></td>
+                                                        <td><?= $userdata['data']; ?><i class="far fa-calendar-alt ml-2"></i></td>
+                                                        <td><?php if($userdata['diagnostico_md'] == "Realizar") echo 'Realizar Teste COVID-19'; else echo'Não Realizar Teste COVID-19';?></td>
                                                         <td><a class="text-decoration-none" href="index.php?page=research_data&id_f=<?= $userdata['id_fatores_risco']; ?>">Consultar Dados</a></td> 
                                                     </tr>
                                                     <?php endforeach; ?>  

@@ -2,6 +2,8 @@
     include('errors.php');
 ?>
 
+
+
 <div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -23,16 +25,6 @@
     errors_print($errors_signin);
     ?>
     </div>
-
-    <!-- Checks for admin privileges-->
-    <?php if(isset($_SESSION['type']) AND $_SESSION['type']== 0):?>
-    <div class="btn-container hidden" id="btn-container">
-        <div class="btn-group">
-           <button class="btn btn-primary active" id="btn-patient" onclick="addpro('remove')" >Para Pacientes</button> 
-           <button class="btn btn-primary" id="btn-pro" onclick="addpro('add')" >Para Profissionais</button>    
-        </div> 
-    </div>
-    <?php endif; ?> 
     <!-- Form for Patients-->
     <div class="container" id="container">
         <div class="sign-up-container visible" id="sign-up-container">         
